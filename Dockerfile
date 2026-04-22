@@ -5,7 +5,7 @@ COPY . /var/www/html/
 
 WORKDIR /var/www/html
 
-ENV SKIP_COMPOSER 1
+# Ne pas sauter Composer (supprime SKIP_COMPOSER)
 ENV WEBROOT /var/www/html/public
 ENV PHP_ERRORS_STDERR 1
 ENV RUN_SCRIPTS 1
@@ -19,6 +19,9 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN apk update && \
     apk add --no-cache curl && \
     docker-php-ext-install pdo_mysql
+
+# Installer les dépendances PHP avec Composer
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # Générer la clé Laravel
 RUN php artisan key:generate
