@@ -1,0 +1,192 @@
+/* public/css/livewire/add-permission.css */
+
+/* Styles pour la zone des permissions */
+.permissions-grid {
+    max-height: 24rem;
+    overflow-y: auto;
+}
+
+.permissions-grid::-webkit-scrollbar {
+    width: 6px;
+}
+
+.permissions-grid::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.permissions-grid::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.permissions-grid::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Styles pour les cases à cocher */
+.permission-checkbox {
+    transition: all 0.2s ease;
+}
+
+.permission-checkbox:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.permission-checkbox:checked:not(:disabled) {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+/* Surlignement des résultats de recherche */
+.search-match {
+    background-color: #fef3c7;
+    padding: 0 2px;
+    border-radius: 3px;
+    font-weight: 600;
+    animation: highlightPulse 2s ease-in-out;
+}
+
+@keyframes highlightPulse {
+    0%, 100% {
+        background-color: #fef3c7;
+    }
+    50% {
+        background-color: #fde68a;
+    }
+}
+
+/* Styles pour les cartes de statistiques */
+.stats-card {
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.stats-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.stats-card-blue {
+    background-color: #eff6ff;
+    border-color: #bfdbfe;
+}
+
+.stats-card-green {
+    background-color: #f0fdf4;
+    border-color: #bbf7d0;
+}
+
+.stats-card-gray {
+    background-color: #f9fafb;
+    border-color: #e5e7eb;
+}
+
+/* Styles pour la barre de recherche */
+.search-container {
+    position: relative;
+}
+
+.search-icon {
+    pointer-events: none;
+}
+
+.clear-search-btn {
+    transition: color 0.2s ease;
+}
+
+.clear-search-btn:hover {
+    color: #4b5563;
+}
+
+/* Styles pour les boutons d'action */
+.action-btn {
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    transform: translateY(-1px);
+}
+
+.action-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Styles pour les messages d'alerte */
+.alert-warning {
+    background-color: #fffbeb;
+    border-color: #fbbf24;
+}
+
+.alert-warning p {
+    color: #92400e;
+}
+
+/* Animation pour le chargement */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-spinner {
+    animation: spin 1s linear infinite;
+}
+
+/* Styles responsifs */
+@media (max-width: 768px) {
+    .permissions-grid {
+        grid-template-columns: 1fr !important;
+        max-height: 20rem;
+    }
+    
+    .stats-cards {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+    }
+    
+    .search-controls {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .action-buttons {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+/* Styles pour les états vides */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.empty-state-icon {
+    color: #9ca3af;
+    margin: 0 auto 1rem;
+}
+
+/* Styles pour les transitions */
+.fade-enter {
+    opacity: 0;
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transition: opacity 300ms;
+}
+
+.fade-exit {
+    opacity: 1;
+}
+
+.fade-exit-active {
+    opacity: 0;
+    transition: opacity 300ms;
+}

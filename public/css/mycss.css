@@ -1,0 +1,20 @@
+.hidden-print,
+.hidden-print * {
+    display: none !important;
+}
+.moctpos {
+    position: relative; left: 45%;
+}
+.number-cell {
+    direction: ltr;
+    unicode-bidi: embed;
+    display: inline-block;
+}
+
+[dir="rtl"] .number-cell {
+    text-align: left;
+}
+
+[dir="rtl"] .flex.items-center.gap-2 {
+    flex-direction: row-reverse;
+}
