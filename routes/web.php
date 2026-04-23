@@ -40,6 +40,19 @@ use Spatie\Permission\Models\Permission;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/debug-routes', function() {
+    $routes = [];
+    foreach (app('router')->getRoutes()->getRoutes() as $route) {
+        if (str_contains($route->uri(), 'login') || str_contains($route->uri(), 'register')) {
+            $routes[] = $route->uri();
+        }
+    }
+    return response()->json([
+        'jetstream_installed' => class_exists('Laravel\Jetstream\Jetstream'),
+        'fortify_installed' => class_exists('Laravel\Fortify\Fortify'),
+        'auth_routes' => $routes
+    ]);
+});
 Route::get('/', function () {
     
     return view('welcome');
