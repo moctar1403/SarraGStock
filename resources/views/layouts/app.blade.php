@@ -1,13 +1,5 @@
 <!DOCTYPE html>
-<html   lang="{{ str_replace('_', '-', app()->getLocale()) }}"
-        {{-- dir="{{ __('messages.direction') }}" --}}
-        @if (app()->getLocale() == 'ar')
-            dir="rtl"
-        @else
-            dir="ltr"
-        @endif
-      {{-- dir="{{ (app()->getLocale() == 'fr' || app()->getLocale() == 'ar') ? 'ltr' : 'rtl' }}"   --}}
->
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,23 +12,17 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
-        {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
-        @php
-            $manifest = json_decode(file_get_contents(public_path('build/manifest.json')), true);
-        @endphp
-        <link rel="stylesheet" href="{{ asset('build/' . $manifest['resources/css/app.css']['file']) }}">
-        <script src="{{ asset('build/' . $manifest['resources/js/app.js']['file']) }}" defer></script>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+
         <!-- Styles -->
         @livewireStyles
-        <!-- personnel css -->
-        <link rel="stylesheet" href="{{ asset('css/mycss.css') }}">
-        <link href="{{ asset('css/components/crud-layout.css') }}" rel="stylesheet">
     </head>
     <body class="font-sans antialiased">
         <x-banner />
 
         <div class="min-h-screen bg-gray-100">
             @livewire('navigation-menu')
+
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-white shadow">
@@ -46,11 +32,6 @@
                 </header>
             @endif
 
-            {{-- Messages flash --}}
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
-                @include('partials.flash-messages')
-            </div>
-            
             <!-- Page Content -->
             <main>
                 {{ $slot }}
@@ -60,13 +41,5 @@
         @stack('modals')
 
         @livewireScripts
-        <script>
-            var btnPrint= document.querySelector('#btnPrint');
-            if (btnPrint) {
-                btnPrint.addEventListener("click", ()=>{
-                    window.print();
-                });
-            }
-        </script>
     </body>
 </html>

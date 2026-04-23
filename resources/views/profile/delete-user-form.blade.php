@@ -1,33 +1,23 @@
 <x-action-section>
-    
     <x-slot name="title">
-        {{-- {{ __('Delete Account') }} --}}
+        {{ __('Delete Account') }}
     </x-slot>
 
     <x-slot name="description">
-        {{-- {{ __('Permanently delete your account.') }} --}}
+        {{ __('Permanently delete your account.') }}
     </x-slot>
 
     <x-slot name="content">
-        @if (test_super_admin_role(Auth::user()))
         <div class="max-w-xl text-sm text-gray-600">
-            {{ __('The super-admin account cannot be deleted') }}
+            {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
         </div>
-        @elseif (test_admin_role(Auth::user()))
-        <div class="max-w-xl text-sm text-gray-600">
-            {{-- {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }} --}}
-        </div>
+
         <div class="mt-5">
-            {{-- <x-danger-button wire:click="confirmUserDeletion" wire:loading.attr="disabled">
+            <x-danger-button wire:click="confirmUserDeletion" wire:loading.attr="disabled">
                 {{ __('Delete Account') }}
-            </x-danger-button> --}}
+            </x-danger-button>
         </div>
-        @else
-        <div class="max-w-xl text-sm text-gray-600">
-            {{ __('You do not have the necessary permissions') }}
-        </div>
-        @endif
-        
+
         <!-- Delete User Confirmation Modal -->
         <x-dialog-modal wire:model.live="confirmingUserDeletion">
             <x-slot name="title">
@@ -53,6 +43,7 @@
                 <x-secondary-button wire:click="$toggle('confirmingUserDeletion')" wire:loading.attr="disabled">
                     {{ __('Cancel') }}
                 </x-secondary-button>
+
                 <x-danger-button class="ms-3" wire:click="deleteUser" wire:loading.attr="disabled">
                     {{ __('Delete Account') }}
                 </x-danger-button>
