@@ -32,3 +32,5 @@ RUN php artisan key:generate
 # Permissions pour storage et cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
     chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+# Migration automatique au démarrage
+RUN echo "php artisan migrate --force" >> /var/www/html/scripts/00-migrate.sh && chmod +x /var/www/html/scripts/00-migrate.sh
