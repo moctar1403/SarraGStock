@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Artisan;
 use App\Helpers\MachineHelper;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BackupController;
@@ -40,6 +40,12 @@ use Spatie\Permission\Models\Permission;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/clear-cache', function() {
+    Artisan::call('route:clear');
+    Artisan::call('view:clear');
+    Artisan::call('config:clear');
+    return 'Caches cleared!';
+});
 Route::get('/check-auth', function() {
     return [
         'jetstream' => class_exists('Laravel\Jetstream\JetstreamServiceProvider'),
