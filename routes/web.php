@@ -40,6 +40,13 @@ use Spatie\Permission\Models\Permission;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/check-auth', function() {
+    return [
+        'jetstream' => class_exists('Laravel\Jetstream\JetstreamServiceProvider'),
+        'fortify' => class_exists('Laravel\Fortify\FortifyServiceProvider'),
+        'providers' => array_keys(app()->getProviders()),
+    ];
+});
 Route::get('/debug-routes', function() {
     $routes = [];
     foreach (app('router')->getRoutes()->getRoutes() as $route) {
