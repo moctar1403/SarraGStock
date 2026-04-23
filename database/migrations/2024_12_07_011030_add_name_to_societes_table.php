@@ -6,27 +6,34 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
-        Schema::table('societes', function (Blueprint $table) {
-            $table->string('soc_nom',30)->after('id');
-            $table->string('soc_nif',30)->after('soc_email');
-            $table->string('soc_rc',30)->after('soc_nif');
-        });
+        // Ajouter soc_nom si elle n'existe pas
+        if (!Schema::hasColumn('societes', 'soc_nom')) {
+            Schema::table('societes', function (Blueprint $table) {
+                $table->string('soc_nom', 30)->nullable()->after('id');
+            });
+        }
+
+        // Ajouter soc_nif si elle n'existe pas
+        if (!Schema::hasColumn('societes', 'soc_nif')) {
+            Schema::table('societes', function (Blueprint $table) {
+                $table->string('soc_nif', 30)->nullable()->after('soc_email');
+            });
+        }
+
+        // Ajouter soc_rc si elle n'existe pas
+        if (!Schema::hasColumn('societes', 'soc_rc')) {
+            Schema::table('societes', function (Blueprint $table) {
+                $table->string('soc_rc', 30)->nullable()->after('soc_nif');
+            });
+        }
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::table('societes', function (Blueprint $table) {
-            $table->dropColumn('soc_nom');
-            $table->dropColumn('soc_nif');
-            $table->dropColumn('soc_rc');
+            $table->dropColumn(['soc_nom', 'soc_nif', 'soc_rc']);
         });
     }
 };

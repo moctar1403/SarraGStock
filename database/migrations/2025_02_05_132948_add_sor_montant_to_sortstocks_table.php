@@ -6,25 +6,27 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
-        Schema::table('sortstocks', function (Blueprint $table) {
-            $table->decimal('sor_montant_t_achat',10,2)->after('sor_prix_vente')->default('0');
-            $table->decimal('sor_montant_t_vente',10,2)->after('sor_montant_t_achat')->default('0');
-        });
+        // Ajouter la colonne 'sor_montant_t_achat' si elle n'existe pas
+        if (!Schema::hasColumn('sortstocks', 'sor_montant_t_achat')) {
+            Schema::table('sortstocks', function (Blueprint $table) {
+                $table->decimal('sor_montant_t_achat', 10, 2)->after('sor_prix_vente')->default(0);
+            });
+        }
+
+        // Ajouter la colonne 'sor_montant_t_vente' si elle n'existe pas
+        if (!Schema::hasColumn('sortstocks', 'sor_montant_t_vente')) {
+            Schema::table('sortstocks', function (Blueprint $table) {
+                $table->decimal('sor_montant_t_vente', 10, 2)->after('sor_montant_t_achat')->default(0);
+            });
+        }
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::table('sortstocks', function (Blueprint $table) {
-            $table->dropColumn('sor_montant_t_achat');
-            $table->dropColumn('sor_montant_t_vente');
+            $table->dropColumn(['sor_montant_t_achat', 'sor_montant_t_vente']);
         });
     }
 };
