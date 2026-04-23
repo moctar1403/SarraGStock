@@ -29,9 +29,15 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 # Générer la clé Laravel
 RUN php artisan key:generate
 
+# Optimisation Laravel pour la production
+RUN php artisan package:discover --ansi
+RUN php artisan route:cache
+RUN php artisan view:cache
+RUN php artisan config:cache
+
 # Permissions pour storage et cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
     chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Migration automatique au démarrage
+# Migration automatique au démarrage (optionnel)
 RUN echo "php artisan migrate --force" >> /var/www/html/scripts/00-migrate.sh && chmod +x /var/www/html/scripts/00-migrate.sh
