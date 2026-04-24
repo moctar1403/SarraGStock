@@ -6,6 +6,7 @@ COPY . /var/www/html/
 WORKDIR /var/www/html
 
 # Ne pas sauter Composer
+ENV SKIP_COMPOSER 0
 ENV WEBROOT /var/www/html/public
 ENV PHP_ERRORS_STDERR 1
 ENV RUN_SCRIPTS 1
@@ -26,18 +27,20 @@ RUN if [ ! -f .env ]; then cp .env.example .env; fi
 # Installer les dépendances PHP avec Composer
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
+# Forcer l'enregistrement des providers Jetstream/Fortify
+RUN php artisan package:discover --ansi
+
 # Générer la clé Laravel
 RUN php artisan key:generate
 
-# Optimisation Laravel pour la production
-RUN php artisan package:discover --ansi
-RUN php artisan route:cache
+# Optimisations Laravel (sans route:cache pour éviter les problèmes)
 RUN php artisan view:cache
 RUN php artisan config:cache
+# RUN php artisan route:cache   # Commenté temporairement pour tester
 
 # Permissions pour storage et cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
     chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Migration automatique au démarrage (optionnel)
+# Migration automatique au démarrage
 RUN echo "php artisan migrate --force" >> /var/www/html/scripts/00-migrate.sh && chmod +x /var/www/html/scripts/00-migrate.sh
