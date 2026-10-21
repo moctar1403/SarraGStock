@@ -44,16 +44,25 @@ class ListeInventaire extends Component
     }
     public function render()
     { 
-         $articles2 = Article::all();
+        // Initialisation défensive
+        $initials       = [];
+        $final_stock    = [];
+        $sorties_stock  = [];
+        $sorties_pertes = [];
+        $sorties_dons   = [];
+        $sorties_detail = [];
+        $sum_entrees    = [];
+        $articles2 = Article::all();
          if ($articles2) {
             foreach ($articles2 as $key => $value) {
-            $first_entree=Entrstock::where('article_id',$value->id)->first();
-            if ($first_entree) {
-                $initials[$value->id]=$first_entree->ent_qte;
-            }
-            else {
-                $initials[$value->id]=0;
-            }
+            $initials[$value->id] = Entrstock::where('article_id', $value->id)->value('ent_qte') ?? 0;
+            // $first_entree=Entrstock::where('article_id',$value->id)->first();
+            // if ($first_entree) {
+            //     $initials[$value->id]=$first_entree->ent_qte;
+            // }
+            // else {
+            //     $initials[$value->id]=0;
+            // }
             $final_stock[$value->id]=$value->ar_qte;
             $sorties_stock[$value->id]=0;
             $sum_entrees[$value->id]=0;

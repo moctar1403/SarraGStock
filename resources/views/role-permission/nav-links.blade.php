@@ -48,17 +48,17 @@
             </x-nav-link-dashboard>
         @endcan
 
-        @can('view role')
+        {{-- @can('view role') --}}
             <x-nav-link-dashboard :route="route('roles.index')" :active="request()->routeIs('roles.index')">
                 {{ __('Rôles') }}
             </x-nav-link-dashboard>
-        @endcan
+        {{-- @endcan --}}
 
-        @can('view permission')
+        {{-- @can('view permission') --}}
             <x-nav-link-dashboard :route="route('permissions.index')" :active="request()->routeIs('permissions.index')">
                 {{ __('Permissions') }}
             </x-nav-link-dashboard>
-        @endcan
+        {{-- @endcan --}}
     @else
         {{-- Ordre normal pour le français --}}
         @can('view permission')

@@ -11,31 +11,70 @@ use App\Models\Sortstock;
 use Illuminate\Support\Facades\Auth;
 // use Illuminate\Support\Facades\Storage;
 if (! function_exists('trace')) {
-    function trace($data,$model)
+    function trace($data, $model)
     {
-        $request=request();
-        // dd($request->session()->getId());
-        $session=(string)$request->session()->getId();
-        // $session="";
-        $user=Auth::user();
-        $post=Poste::find(1);
-        if ($post) {
-            $user_id=$user->id;
-            $user_name=$user->name;
-            $ip=$post->visits->first()->present()->ip;
-            //creation de la trace
-            $trace=Trace::create([
-                'user_id'=>$user_id,
-                'user_name'=>$user_name,
-                'ip'=>$ip,
-                'session'=>$session,
-                'model'=>$model,
-                'data'=>$data,
+        $request = request();
+        $session = (string) $request->session()->getId();
+        $user = Auth::user();
+
+        // ⚠️ Vérifier que l'utilisateur est connecté
+        if (!$user) {
+            \Log::warning('trace() : aucun utilisateur connecté');
+            return;
+        }
+
+        // ⚠️ Récupérer l'IP avec fallback
+        $ip = $request->ip();   // ⬅️ Simple et fiable, pas besoin de Poste/visits
+
+        // Créer la trace
+        try {
+            Trace::create([
+                'user_id'   => $user->id,
+                'user_name' => $user->name,
+                'ip'        => $ip,
+                'session'   => $session,
+                'model'     => $model,
+                'data'      => $data,
             ]);
-            $trace->save();
+
+            \Log::info("trace() ✅ : {$data} sur {$model}");
+
+        } catch (\Throwable $e) {
+            \Log::error("trace() ❌ : " . $e->getMessage(), [
+                'data'  => $data,
+                'model' => $model,
+                'file'  => $e->getFile(),
+                'line'  => $e->getLine(),
+            ]);
         }
     }
 }
+// if (! function_exists('trace')) {
+//     function trace($data,$model)
+//     {
+//         $request=request();
+//         // dd($request->session()->getId());
+//         $session=(string)$request->session()->getId();
+//         // $session="";
+//         $user=Auth::user();
+//         $post=Poste::find(1);
+//         if ($post) {
+//             $user_id=$user->id;
+//             $user_name=$user->name;
+//             $ip=$post->visits->first()->present()->ip;
+//             //creation de la trace
+//             $trace=Trace::create([
+//                 'user_id'=>$user_id,
+//                 'user_name'=>$user_name,
+//                 'ip'=>$ip,
+//                 'session'=>$session,
+//                 'model'=>$model,
+//                 'data'=>$data,
+//             ]);
+//             $trace->save();
+//         }
+//     }
+// }
 if (! function_exists('afficher_montant')) {
     function afficher_montant($data)
     {

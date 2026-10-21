@@ -45,6 +45,16 @@ class LicenseSeeder extends Seeder
         
         file_put_contents($licenceFile, $content);
         echo "Fichier de licence créé : $licenceFile\n";
+        
+        // ⬇️ AJOUT : Écrire un fichier JSON pour le script PowerShell ⬇️
+        $jsonFile = $licenceDir . 'license_key.json';
+        file_put_contents($jsonFile, json_encode([
+            'plain' => $plain,
+            'hashed' => $hashed,
+            'generated_at' => date('c'),
+        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        echo "Fichier JSON créé : $jsonFile\n";
+        // ⬆️ FIN AJOUT ⬆️
     }
     
     protected function generateLicenseKey() {

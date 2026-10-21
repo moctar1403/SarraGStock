@@ -134,13 +134,15 @@ class Homs1 extends Component
                             ->orWhere('meth_nom','like','%Credit%')
                             ->orWhere('meth_nom','like','%credit%')
                             ->first();
-        $this->credit_id=$row_credit->id;
+        // $this->credit_id=$row_credit->id;
+        $this->credit_id = ($row_credit !== null) ? $row_credit->id : null;
         $row_espece=Methode::where('meth_nom','like','%Espèce%')
                             ->orWhere('meth_nom','like','%Espece%')
                             ->orWhere('meth_nom','like','%espèce%')
                             ->orWhere('meth_nom','like','%espece%')
                             ->first();
-        $this->espece_id=$row_espece->id;                                                                                    
+        // $this->espece_id=$row_espece->id;                                                                                                                                                                       
+        $this->espece_id = ($row_espece !== null) ? $row_espece->id : null;                                                                                  
         $this->appl=Vente::where('type_p','!=',$this->espece_id)
                                 ->where('type_p','!=',$this->credit_id)
                                 ->whereDate('updated_at','>=', $this->date1)

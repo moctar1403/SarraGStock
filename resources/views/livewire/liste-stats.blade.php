@@ -10,15 +10,15 @@
 
             {{-- Ajoutez d'autres liens de statistiques ici si nécessaire --}}
             @can('view stats_ventes')
-                <x-nav-link-dashboard :route="route('stats.ventes')" :active="request()->routeIs('stats.ventes')">
-                    {{ __('Ventes') }}
-                </x-nav-link-dashboard>
+                {{-- <x-nav-link-dashboard :route="route('stats.ventes')" :active="request()->routeIs('stats.ventes')"> --}}
+                    {{-- {{ __('Ventes') }}
+                </x-nav-link-dashboard> --}}
             @endcan
 
             @can('view stats_articles')
-                <x-nav-link-dashboard :route="route('stats.articles')" :active="request()->routeIs('stats.articles')">
+                {{-- <x-nav-link-dashboard :route="route('stats.articles')" :active="request()->routeIs('stats.articles')">
                     {{ __('Articles') }}
-                </x-nav-link-dashboard>
+                </x-nav-link-dashboard> --}}
             @endcan
         </div>
 

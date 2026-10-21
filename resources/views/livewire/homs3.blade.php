@@ -40,7 +40,7 @@
                     <span class="font-semibold">{{ __('Total Ventes') }} :</span>
                     <span class="mx-2 text-green-600 number-cell">{!! format_number($ventes_sum) !!}</span>
                     {{-- <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()->monn_code) }}</span> --}}
-                    <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()->monn_code) }}</span>
+                    <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()?->monn_code ?? '') }}</span>
                 </div>
 
                 {{-- Ventes par méthode --}}
@@ -48,7 +48,7 @@
                     <div class="text-sm font-medium text-gray-900 px-3 py-2 hover:bg-gray-50 rounded transition">
                         <span class="font-semibold">{{ __($item->meth_nom) }} :</span>
                         <span class="mx-2 text-blue-600 number-cell">{!! format_number($liste_pay[$key]) !!}</span>
-                        <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()->monn_code) }}</span>
+                        <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()?->monn_code ?? '') }}</span>
                     </div>
                 @endforeach
 
@@ -56,56 +56,56 @@
                 <div class="text-sm font-medium text-gray-900 px-3 py-2 hover:bg-gray-50 rounded transition">
                     <span class="font-semibold">{{ __('Ventes par Applications de paiement') }} :</span>
                     <span class="mx-2 text-blue-600 number-cell">{!! format_number($appl) !!}</span>
-                    <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()->monn_code) }}</span>
+                    <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()?->monn_code ?? '') }}</span>
                 </div>
 
                 {{-- Créances payées --}}
                 <div class="text-sm font-medium text-gray-900 px-3 py-2 hover:bg-gray-50 rounded transition">
                     <span class="font-semibold">{{ __('Créances payées par les clients') }} :</span>
                     <span class="mx-2 text-green-600 number-cell">{!! format_number($paiement_cli) !!}</span>
-                    <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()->monn_code) }}</span>
+                    <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()?->monn_code ?? '') }}</span>
                 </div>
 
                 {{-- Dettes payées --}}
                 <div class="text-sm font-medium text-gray-900 px-3 py-2 hover:bg-gray-50 rounded transition">
                     <span class="font-semibold">{{ __('Dettes payées pour les fournisseurs') }} :</span>
                     <span class="mx-2 text-red-600 number-cell">{!! format_number($paiement_four) !!}</span>
-                    <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()->monn_code) }}</span>
+                    <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()?->monn_code ?? '') }}</span>
                 </div>
 
                 {{-- Pertes --}}
                 <div class="text-sm font-medium text-gray-900 px-3 py-2 hover:bg-gray-50 rounded transition">
                     <span class="font-semibold">{{ __('Pertes') }} :</span>
                     <span class="mx-2 text-red-600 number-cell">-{!! format_number($pertes) !!}</span>
-                    <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()->monn_code) }}</span>
+                    <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()?->monn_code ?? '') }}</span>
                 </div>
 
                 {{-- Remises --}}
                 <div class="text-sm font-medium text-gray-900 px-3 py-2 hover:bg-gray-50 rounded transition">
                     <span class="font-semibold">{{ __('Remises') }} :</span>
                     <span class="mx-2 text-orange-600 number-cell">-{!! format_number($remises) !!}</span>
-                    <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()->monn_code) }}</span>
+                    <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()?->monn_code ?? '') }}</span>
                 </div>
 
                 {{-- Coût de revient des ventes --}}
                 <div class="text-sm font-medium text-gray-900 px-3 py-2 hover:bg-gray-50 rounded transition">
                     <span class="font-semibold">{{ __('Coût de revient des ventes') }} :</span>
                     <span class="mx-2 text-orange-600 number-cell">-{!! format_number($p_achat_t) !!}</span>
-                    <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()->monn_code) }}</span>
+                    <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()?->monn_code ?? '') }}</span>
                 </div>
 
                 {{-- Total Coût de revient --}}
                 <div class="text-sm font-medium text-gray-900 px-3 py-2 hover:bg-gray-50 rounded transition">
                     <span class="font-semibold">{{ __('Total Coût de revient') }} :</span>
                     <span class="mx-2 text-orange-600 number-cell">-{!! format_number($p_achat_t + $pertes) !!}</span>
-                    <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()->monn_code) }}</span>
+                    <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()?->monn_code ?? '') }}</span>
                 </div>
 
                 {{-- Profit --}}
                 <div class="text-sm font-medium text-gray-900 px-3 py-2 hover:bg-gray-50 rounded mt-4 border-t pt-4">
                     <span class="font-bold text-lg">{{ __('Profit') }} :</span>
                     <span class="mx-2 text-green-600 font-bold text-lg number-cell">{!! format_number($profit) !!}</span>
-                    <span class="font-bold text-lg">{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()->monn_code) }}</span>
+                    <span class="font-bold text-lg">{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()?->monn_code ?? '') }}</span>
                 </div>
             </div>
         </div>
