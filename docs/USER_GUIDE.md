@@ -7,11 +7,12 @@ Ce guide vous explique comment utiliser l'application au quotidien pour gérer v
 1. [Connexion à l'application](#1-connexion-à-lapplication)
 2. [Le Tableau de bord](#2-le-tableau-de-bord)
 3. [Gestion des Articles (Catalogue)](#3-gestion-des-articles-catalogue)
-4. [Gestion des Tiers (Clients & Fournisseurs)](#4-gestion-des-tiers-clients--fournisseurs)
-5. [Enregistrer une Vente](#5-enregistrer-une-vente)
-6. [Gérer les Achats (Entrées de stock)](#6-gérer-les-achats-entrées-de-stock)
-7. [Gérer les Sorties de Stock (Pertes, Casses, etc.)](#7-gérer-les-sorties-de-stock-pertes-casses-etc)
-8. [Consulter l'Inventaire](#8-consulter-linventaire)
+4. [Détailler un Article (Conditionnement)](#4-détailler-un-article-conditionnement)
+5. [Gestion des Tiers (Clients & Fournisseurs)](#5-gestion-des-tiers-clients--fournisseurs)
+6. [Enregistrer une Vente](#6-enregistrer-une-vente)
+7. [Gérer les Achats (Entrées de stock)](#7-gérer-les-achats-entrées-de-stock)
+8. [Gérer les Sorties de Stock (Pertes, Casses, etc.)](#8-gérer-les-sorties-de-stock-pertes-casses-etc)
+9. [Consulter l'Inventaire](#9-consulter-linventaire)
 
 ---
 
@@ -57,7 +58,51 @@ Dans la liste des articles, cliquez sur l'icône ✏️ (crayon) pour modifier, 
 
 ---
 
-## 4. Gestion des Tiers (Clients & Fournisseurs)
+## 4. Détailler un Article (Conditionnement)
+
+Certains articles sont achetés et stockés en gros (ex: une caisse de 12 bouteilles d'eau), mais peuvent être vendus à l'unité. La fonction **Détailler un article** permet de gérer ce système de conditionnement.
+
+### A. Créer un article de détail
+Avant de pouvoir "casser" une caisse, il faut créer l'article qui représentera l'unité de base.
+
+1. Allez dans **Articles > Nouvel Article**.
+2. Remplissez les champs obligatoires (marqués en rouge) :
+   - **Libellé Article** : Le nom de l'unité de base (ex: "Bouteille d'eau 1.5L").
+   - **Description** : Une courte description.
+   - **Prix de vente** : Le prix de vente de l'unité seule.
+3. *Optionnel* : Vous pouvez également renseigner la **Référence** et le **Code barre**, mais ce n'est pas obligatoire.
+4. ⚠️ **Point crucial :** Dans le champ **Unité de vente**, sélectionnez impérativement **"Article de détail"**.
+5. **Quantité** : Laissez à `0` (elle sera gérée automatiquement par les opérations de détail).
+6. **Quantité minimale** : Ce champ est obligatoire et doit être renseigné (mettez `0` si vous ne souhaitez pas d'alerte de stock sur l'unité seule).
+7. **Ne touchez pas** aux champs *Prix total achat* et *Prix achat* : ils sont grisés et seront calculés automatiquement par l'application lors de l'opération de détail.
+8. Cliquez sur **Enregistrer**.
+
+### B. Lier l'article principal à son détail
+Maintenant, il faut dire à l'application que "1 Caisse" contient "12 Bouteilles".
+
+1. Allez dans **Articles > Détailler un article > Liste des articles détaillables**.
+2. Cliquez sur **Ajouter un article de détail**.
+3. **Choisissez l'article principal** (ex: "Caisse d'eau 12x1.5L").
+4. **Choisissez l'article de détail** (ex: "Bouteille d'eau 1.5L").
+5. Indiquez la **Quantité de l'article détail par unité d'article principal** (ex: tapez `12`).
+6. Cliquez sur **Ajouter** pour valider la liaison.
+
+### C. Effectuer une opération de détail (Casser une caisse)
+Lorsque vous voulez vendre les bouteilles à l'unité, vous ne pouvez pas le faire directement. Vous devez d'abord "détailler" la caisse dans le système.
+
+1. Allez dans **Articles > Détailler un article > Liste des opérations de détail**.
+2. Cliquez sur **Effectuer une opération de détail**.
+3. **Sélectionnez l'Article principal** (ex: "Caisse d'eau"). L'application affichera automatiquement l'article de détail lié et la **Quantité Disponible**.
+4. Indiquez la **Quantité sortie de l'Article principal** (ex: si vous sortez 2 caisses, tapez `2`).
+5. L'application calcule automatiquement la **Quantité Totale entrée** pour l'article de détail (ex: 2 caisses × 12 = 24 bouteilles).
+6. Vérifiez les **Prix d'achat** et **Prix de vente** calculés pour l'unité.
+7. Choisissez la **Date** de l'opération et validez.
+
+*Résultat : Le stock de la caisse diminue de 2, et le stock des bouteilles individuelles augmente de 24. Vous pouvez maintenant vendre les bouteilles à l'unité !*
+
+---
+
+## 5. Gestion des Tiers (Clients & Fournisseurs)
 
 Le menu **Tiers** regroupe vos clients et vos fournisseurs.
 
@@ -74,7 +119,7 @@ La procédure est identique, mais dans la section **Tiers > Fournisseurs**.
 
 ---
 
-## 5. Enregistrer une Vente
+## 6. Enregistrer une Vente
 
 C'est l'action la plus courante. Voici comment facturer un client :
 
@@ -89,7 +134,7 @@ C'est l'action la plus courante. Voici comment facturer un client :
 
 ---
 
-## 6. Gérer les Achats (Entrées de stock)
+## 7. Gérer les Achats (Entrées de stock)
 
 Lorsque vous recevez de la marchandise d'un fournisseur, vous devez l'enregistrer pour mettre à jour votre stock.
 
@@ -102,7 +147,7 @@ Lorsque vous recevez de la marchandise d'un fournisseur, vous devez l'enregistre
 
 ---
 
-## 7. Gérer les Sorties de Stock (Pertes, Casses, etc.)
+## 8. Gérer les Sorties de Stock (Pertes, Casses, etc.)
 
 Il arrive que des articles quittent le stock **sans être vendus**. Par exemple : un produit périmé, de la casse lors du transport, ou un vol. Il ne faut pas utiliser l'écran "Vente" pour cela (car cela fausserait votre chiffre d'affaires). Utilisez la fonction "Sortie".
 
@@ -116,7 +161,7 @@ Il arrive que des articles quittent le stock **sans être vendus**. Par exemple 
 
 ---
 
-## 8. Consulter l'Inventaire
+## 9. Consulter l'Inventaire
 
 Le menu **Inventaire** vous permet de voir l'état exact de votre stock à un instant T.
 - Vous pouvez filtrer par article ou par catégorie.
