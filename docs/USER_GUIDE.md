@@ -10,7 +10,8 @@ Ce guide vous explique comment utiliser l'application au quotidien pour gérer v
 4. [Gestion des Tiers (Clients & Fournisseurs)](#4-gestion-des-tiers-clients--fournisseurs)
 5. [Enregistrer une Vente](#5-enregistrer-une-vente)
 6. [Gérer les Achats (Entrées de stock)](#6-gérer-les-achats-entrées-de-stock)
-7. [Consulter l'Inventaire](#7-consulter-linventaire)
+7. [Gérer les Sorties de Stock (Pertes, Casses, etc.)](#7-gérer-les-sorties-de-stock-pertes-casses-etc)
+8. [Consulter l'Inventaire](#8-consulter-linventaire)
 
 ---
 
@@ -101,7 +102,21 @@ Lorsque vous recevez de la marchandise d'un fournisseur, vous devez l'enregistre
 
 ---
 
-## 7. Consulter l'Inventaire
+## 7. Gérer les Sorties de Stock (Pertes, Casses, etc.)
+
+Il arrive que des articles quittent le stock **sans être vendus**. Par exemple : un produit périmé, de la casse lors du transport, ou un vol. Il ne faut pas utiliser l'écran "Vente" pour cela (car cela fausserait votre chiffre d'affaires). Utilisez la fonction "Sortie".
+
+1. Allez dans **Stocks > Nouvelle Sortie** (ou Sorties de stock).
+2. **Sélectionnez l'article** concerné.
+3. Indiquez la **quantité** perdue ou sortie.
+4. **Le Motif de sortie** : C'est le champ le plus important. Choisissez le motif approprié dans la liste (ex: *Perte*, *Casse*, *Péremption*, *Don*, etc.).
+5. Validez la sortie.
+
+*Le stock est automatiquement diminué, et cette opération sera visible dans l'historique pour votre comptabilité.*
+
+---
+
+## 8. Consulter l'Inventaire
 
 Le menu **Inventaire** vous permet de voir l'état exact de votre stock à un instant T.
 - Vous pouvez filtrer par article ou par catégorie.
