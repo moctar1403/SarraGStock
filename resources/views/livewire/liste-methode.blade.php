@@ -67,13 +67,17 @@
                                         <td class="text-sm font-medium text-center whitespace-nowrap">
                                             <div class="flex justify-center space-x-1 rtl:space-x-reverse">
                                                 @can('update methode')
+                                                @if (($item->id)>2)
                                                     @include('partials.boutton_modifier', [
                                                         'url' => route('methodes.edit', $item->id)
                                                     ])
+                                                @endif
                                                 @endcan
                                                 
                                                 @can('delete methodes')
-                                                    @include('partials.boutton_supprimer')
+                                                    @if (($item->id)>5)
+                                                        @include('partials.boutton_supprimer')
+                                                    @endif
                                                 @endcan
                                             </div>
                                         </td>

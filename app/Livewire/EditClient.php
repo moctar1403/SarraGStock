@@ -32,8 +32,8 @@ class EditClient extends Component
         // $client=Client::find($this->client->id);
         $this->validate([
             'cli_nom' => 'string|required|unique:clients,cli_nom,'.$this->client->id,
-            'cli_societe' => 'string|required|unique:clients,cli_societe,'.$this->client->id,
-            'cli_civilite' => 'string|required',
+            'cli_societe' => 'string|nullable|unique:clients,cli_societe,'.$this->client->id,
+            'cli_civilite' => 'string|nullable',
             'cli_tel' => 'required|numeric|digits:8|unique:clients,cli_tel,'.$this->client->id,
             'cli_adresse' => 'nullable|string',
             'cli_email' => 'nullable|email|unique:clients,cli_email,'.$this->client->id,

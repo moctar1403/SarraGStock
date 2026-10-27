@@ -1,37 +1,56 @@
 <?php
+
 namespace App\Livewire;
-// use App\helpers;
+
 use Livewire\Component;
 use App\Models\Entrstock;
 use App\Models\Fournisseur;
-use Illuminate\Http\Request;
 use Livewire\WithPagination;
 use App\Livewire\Traits\WithDelete;
+use App\Models\Payfournisseur; 
 
 class ListeFournisseur extends Component
 {
     use WithPagination;
+    
     public $search = '';
+    
     use WithDelete {
         delete as protected traitDelete;
     }
+    
     public function delete()
     {
-        $fournisseur=Fournisseur::where('id','=',$this->deleteId)->first();
-        //verification s'il y a une entree pour le fournisseur 
-        $entree=Entrstock::where('ent_fournisseur',$fournisseur->id)->first();
-        if($entree){
-            return redirect()->route('fournisseurs.index')->with('danger', __("Fournisseur n'est pas supprimé,car il a une entrée en stock"));
+        $fournisseur = Fournisseur::where('id', '=', $this->deleteId)->first();
+        
+        // 1. Vérification s'il y a une entrée en stock pour le fournisseur 
+        $entree = Entrstock::where('ent_fournisseur', $fournisseur->id)->first();
+        if ($entree) {
+            session()->flash('danger', __("Fournisseur n'est pas supprimé, car il a une entrée en stock"));
+            return redirect()->route('fournisseurs.index');
         }
-        else{
-            $fournisseur->delete();
-            //table trace
-            $data="Suppresiion du fournisseur id ".$fournisseur->id." nom ".$fournisseur->four_nom. " ";
-            $model="App\Models\Fournisseur";
-            trace($data,$model);
-            return redirect()->route('fournisseurs.index')->with('success', __('Fournisseur supprimé'));
+
+        // 2. Vérification s'il y a un paiement pour le fournisseur
+        $paiement = Payfournisseur::where('fournisseur_id', $fournisseur->id)->first();
+        if ($paiement) {
+            session()->flash('danger', __("Fournisseur n'est pas supprimé, car il a un historique de paiement"));
+            return redirect()->route('fournisseurs.index');
         }
+
+        // Si tout est bon, on supprime
+        $fournisseur->delete();
+        
+        // Tracing
+        $data = "Suppression du fournisseur id " . $fournisseur->id . " nom " . $fournisseur->four_nom . " ";
+        $model = "App\Models\Fournisseur";
+        trace($data, $model);
+        
+        // Message de succès
+        session()->flash('success', __('Fournisseur supprimé avec succès'));
+        
+        return redirect()->route('fournisseurs.index');
     }
+
     public function render()
     {
         if (!empty($this->search)) {
@@ -46,15 +65,11 @@ class ListeFournisseur extends Component
                             ->paginate(10);
         }
         else {
-            $fournisseurs = Fournisseur::where('id','>',0)->orderByDesc('four_situation')->paginate(10);
+            $fournisseurs = Fournisseur::where('id', '>', 0)
+                            ->orderByDesc('four_situation')
+                            ->paginate(10);
         } 
-        // if ($fournisseurs) {
-        //     foreach ($fournisseurs as $key => $value) {
-        //         // $value->visit()->withIp()->withSession()->withData(["Hello"=>"Bonjour"])->withUser();
-        //         // $value->visit()->withIp()->withSession()->withUser();
-        //     }
-        // }
 
-        return view('livewire.liste-fournisseur',compact('fournisseurs'));
+        return view('livewire.liste-fournisseur', compact('fournisseurs'));
     }
 }

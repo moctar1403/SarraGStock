@@ -19,10 +19,10 @@ class EditFournisseur extends Component
     {
         $rules = [];       
         $rules["four_nom"] = 'required|string|unique:fournisseurs,four_nom,'.$this->fournisseur->id;
-        $rules["four_societe"] = 'required|string|unique:fournisseurs,four_societe,'.$this->fournisseur->id;
-        $rules["four_civilite"] = 'required|min:2';
+        $rules["four_societe"] = 'nullable|string|unique:fournisseurs,four_societe,'.$this->fournisseur->id;
+        $rules["four_civilite"] = 'nullable|min:2';
         $rules["four_tel"] = 'required|numeric|digits:8|unique:fournisseurs,four_tel,'.$this->fournisseur->id;
-        $rules["four_adresse"] = 'required|string';
+        $rules["four_adresse"] = 'nullable|string';
         $rules["four_email"] = 'nullable|email|unique:fournisseurs,four_email,'.$this->fournisseur->id;
         $rules["four_observations"] = 'string|nullable';
         
