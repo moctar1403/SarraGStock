@@ -1,6 +1,6 @@
 # Gestion des Tiers (Clients & Fournisseurs)
 
-[⬅ Retour au sommaire](../USER_GUIDE.md)
+[⬅ Retour au sommaire](/documentation/user_guide)
 
 Le menu **Tiers** vous permet de gérer votre base de données de contacts, en séparant les Clients et les Fournisseurs.
 
@@ -10,13 +10,13 @@ Le menu **Tiers** vous permet de gérer votre base de données de contacts, en s
 
 L'écran **Tiers > Clients** affiche la liste de tous vos clients, avec une barre de recherche et des boutons d'action.
 
-![Liste des clients](../images/liste-clients.png)
+![Liste des clients](/images/docs/liste-clients.png)
 
 ### A. Ajouter un Client
 1. Sur l'écran de la liste des clients, cliquez sur le bouton bleu **Ajouter Client**.
 2. Remplissez le formulaire :
 
-![Formulaire d'ajout d'un client](../images/ajout-client.png)
+![Formulaire d'ajout d'un client](/images/docs/ajout-client.png)
 
    - **Nom** *(Obligatoire)* : Le nom du client. **Doit être unique**.
    - **Civilité** *(Obligatoire)* : Sélectionnez M., Mme, etc. (minimum 2 caractères).
@@ -46,7 +46,7 @@ Pour supprimer un client, cliquez sur le bouton rouge **Supprimer** dans la list
 
 L'écran **Tiers > Fournisseurs** est similaire à celui des clients, mais il inclut des raccourcis pour la gestion des paiements fournisseurs (voir capture ci-dessous).
 
-![Liste des fournisseurs](../images/liste-fournisseurs.png)
+![Liste des fournisseurs](/images/docs/liste-fournisseurs.png)
 
 Depuis cet écran, vous avez 3 boutons en haut à droite :
 - **Ajouter Fournisseur** : Pour créer un nouveau contact.

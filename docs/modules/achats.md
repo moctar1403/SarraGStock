@@ -1,6 +1,6 @@
 # Gérer les Achats (Entrées de stock)
 
-[⬅ Retour au sommaire](../USER_GUIDE.md)
+[⬅ Retour au sommaire](/documentation/user_guide)
 
 Le menu **Achats** (ou **Entrées en stock**) vous permet d'enregistrer la réception de marchandises de vos fournisseurs. L'application met automatiquement à jour votre stock, les prix de vos articles et la situation financière de votre fournisseur.
 
@@ -8,7 +8,7 @@ Le menu **Achats** (ou **Entrées en stock**) vous permet d'enregistrer la réce
 
 ## 1. Consulter l'historique des entrées
 
-![Liste des entrées en stock](../images/liste-entrees.png)
+![Liste des entrées en stock](/images/docs/liste-entrees.png)
 
 L'écran affiche la liste de toutes les réceptions de marchandises :
 - **Date** de réception.
@@ -32,7 +32,7 @@ Si vous avez fait une erreur de saisie, vous pouvez cliquer sur le bouton rouge 
 
 Pour ajouter de la marchandise en stock, cliquez sur le bouton bleu **Nouvelle entrée en stock**.
 
-![Formulaire d'entrée en stock](../images/creation-entree.png)
+![Formulaire d'entrée en stock](/images/docs/creation-entree.png)
 
 1. **Sélectionner un article** : Choisissez l'article dans la liste déroulante. 
    *(Astuce : Vous pouvez aussi utiliser la "Recherche rapide" en tapant l'ID, la Référence ou le Code-barres).*

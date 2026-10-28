@@ -1,10 +1,10 @@
 # Gestion des Articles (Catalogue) et Conditionnement
 
-[⬅ Retour au sommaire](../USER_GUIDE.md)
+[⬅ Retour au sommaire](/documentation/user_guide)
 
 Le menu **Articles** vous permet de gérer votre catalogue de produits. Il affiche la liste de tous vos articles avec leurs prix, leur stock actuel et leurs seuils d'alerte.
 
-![Liste des articles](../images/liste-articles.png)
+![Liste des articles](/images/docs/liste-articles.png)
 
 **Comprendre les couleurs de la colonne "Quantité" :**
 - **En vert** : Le stock est suffisant (la quantité est supérieure ou égale à la quantité minimale).
@@ -15,7 +15,7 @@ Le menu **Articles** vous permet de gérer votre catalogue de produits. Il affic
 ## 1. Créer un article normal
 Voici comment ajouter un produit standard à votre stock.
 
-![Formulaire de création d'un article](../images/creation-article.png)
+![Formulaire de création d'un article](/images/docs/creation-article.png)
 
 1. Allez dans **Articles > Liste des articles**.
 2. Cliquez sur le bouton bleu **Nouveau Article** (en haut à droite).

@@ -61,7 +61,9 @@
                             {{ __('Opérations') }}
                         </x-nav-link>
                     @endcan
-
+                    <x-nav-link :href="route('documentation')" :active="request()->routeIs('documentation*')">
+                        {{ __('📚 Documentation') }}
+                    </x-nav-link>
                     {{-- Sélecteur de langue --}}
                     <div class="border-l border-gray-300 mx-2 h-6 self-center"></div>
                     

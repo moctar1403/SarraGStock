@@ -28,7 +28,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VenteController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Permission;
-
+use Illuminate\Support\Facades\File;
+use League\CommonMark\CommonMarkConverter;
 
 /*
 |--------------------------------------------------------------------------
@@ -247,6 +248,52 @@ Route::middleware([
     Route::post('/restore', [BackupController::class, 'restore'])->name('backup.restore');
     Route::get('/test-machine-id', function () {
     return MachineHelper::machineId();
-});
+    });
+     // Redirection automatique vers le guide utilisateur
+    Route::get('/documentation', function () {
+        return redirect()->route('documentation.show', 'user_guide');
+    })->name('documentation');
 
+    // Affichage d'une page spécifique
+    Route::get('/documentation/{page}', function ($page) {
+        
+        // Sécurité : liste blanche des fichiers autorisés
+        $allowedPages = [
+            'user_guide' => 'docs/USER_GUIDE.md',
+            'demarrage' => 'docs/modules/demarrage.md',
+            'prerequis-client' => 'docs/modules/prerequis-client.md', 
+            'admin_guide' => 'docs/ADMIN_GUIDE.md',
+            'articles' => 'docs/modules/articles.md',
+            'ventes' => 'docs/modules/ventes.md',
+            'achats' => 'docs/modules/achats.md',
+            'tiers' => 'docs/modules/tiers.md',
+            'inventaire' => 'docs/modules/inventaire.md',
+            'sorties' => 'docs/modules/sorties.md',
+            'tresorerie-clients' => 'docs/modules/tresorerie-clients.md',
+            'tresorerie-fournisseurs' => 'docs/modules/tresorerie-fournisseurs.md',
+            'methodes-paiement' => 'docs/modules/methodes-paiement.md',
+        ];
+
+        if (!array_key_exists($page, $allowedPages)) {
+            abort(404, 'Page de documentation introuvable.');
+        }
+
+        $path = base_path($allowedPages[$page]);
+
+        if (!File::exists($path)) {
+            abort(404, 'Le fichier de documentation n\'existe pas.');
+        }
+
+        $converter = new CommonMarkConverter([
+            'html_input' => 'allow', // Permet l'affichage des images
+            'allow_unsafe_links' => true,
+        ]);
+
+        $content = $converter->convert(File::get($path));
+
+        return view('documentation', [
+            'content' => $content,
+            'current_page' => $page
+        ]);
+    })->name('documentation.show');
 });

@@ -1,10 +1,10 @@
 # Inventaire des Articles
 
-[⬅ Retour au sommaire](../USER_GUIDE.md)
+[⬅ Retour au sommaire](/documentation/user_guide)
 
 Le menu **Articles > Inventaire des Articles** vous donne une vue d'ensemble complète et détaillée de l'état de votre stock. Il permet de justifier la quantité finale de chaque article en montrant tous les mouvements (entrées, sorties, pertes).
 
-![Tableau d'inventaire](../images/inventaire.png)
+![Tableau d'inventaire](/images/docs/inventaire.png)
 
 ---
 

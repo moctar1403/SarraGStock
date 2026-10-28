@@ -4,8 +4,9 @@ Ce document détaille les procédures d'installation et de déploiement de l'app
 
 ## 📋 Table des matières
 1. [Installation en environnement de développement (WAMP)](#1-installation-en-environnement-de-développement-wamp)
-2. [Déploiement en environnement de production (Portable)](#2-déploiement-en-environnement-de-production-portable)
-3. [Résolution des problèmes courants](#3-résolution-des-problèmes-courants)
+2. [Prérequis pour le PC de Production (Portable)](#2-prérequis-pour-le-pc-de-production-portable)
+3. [Déploiement en environnement de production (Portable)](#3-déploiement-en-environnement-de-production-portable)
+4. [Résolution des problèmes courants](#4-résolution-des-problèmes-courants)
 
 ---
 
@@ -58,7 +59,39 @@ L'application est accessible à l'adresse `http://127.0.0.1:8000`.
 
 ---
 
-## 2. Déploiement en environnement de production (Portable)
+## 2. Prérequis pour le PC de Production (Portable)
+
+Avant de copier le dossier `C:\SarraGstock` sur le PC du client final, vous devez vous assurer que le PC respecte certaines conditions. **Sans ces prérequis, l'application pourrait ne pas démarrer ou afficher des erreurs.**
+
+### 2.1. Système d'exploitation
+- Windows 10 ou Windows 11 (64 bits recommandé).
+
+### 2.2. Installer les bibliothèques Visual C++ (VC_redist)
+Si l'application affiche une page blanche ou une erreur 500 au démarrage, c'est souvent parce que les bibliothèques C++ de Microsoft ne sont pas installées sur le PC.
+**Solution :**
+1. Téléchargez et installez **VC_redist.x64** (Visual C++ Redistributable) depuis le site officiel de Microsoft.
+2. Redémarrez le PC.
+
+### 2.3. Autoriser l'application dans le Pare-feu Windows
+Au premier lancement, Windows peut bloquer le serveur local de phpDesktop. Cela se manifeste par une erreur de connexion ou un écran qui ne charge pas ("An internal local server was blocked by your firewall").
+
+**Solution (Obligatoire) :**
+1. Ouvrez le **Panneau de configuration**.
+2. Allez dans **Pare-feu Windows Defender**.
+3. Cliquez sur **Autoriser une application via le pare-feu**.
+4. Cliquez sur **Modifier les paramètres** (nécessite les droits d'administrateur).
+5. Cliquez sur **Autoriser une autre application...**.
+6. Ajoutez **ces 2 fichiers** :
+   - `C:\SarraGstock\phpdesktop\phpdesktop.exe`
+   - `C:\SarraGstock\phpdesktop\php\php.exe`
+7. Cochez les cases **Privé** et **Public** pour les deux.
+8. Cliquez sur **OK** et redémarrez phpDesktop.
+
+*(Note : Si vous utilisez un antivirus tiers comme Avast, Kaspersky ou ESET, vous devrez également ajouter une exception pour le dossier `C:\SarraGstock`).*
+
+---
+
+## 3. Déploiement en environnement de production (Portable)
 
 L'application utilise un système portable (MariaDB + PHP + phpDesktop) pour fonctionner sans installation de serveur web sur le PC cible.
 
@@ -69,10 +102,10 @@ L'application utilise un système portable (MariaDB + PHP + phpDesktop) pour fon
 
 ### Procédure de déploiement
 
-**2.1. Préparation**
+**3.1. Préparation**
 Assurez-vous que votre code source de développement (`C:\wamp64\www\SarraGStock`) est à jour et fonctionnel.
 
-**2.2. Exécution du script de déploiement**
+**3.2. Exécution du script de déploiement**
 Ouvrez un terminal PowerShell **en tant qu'Administrateur**, placez-vous dans le dossier portable et lancez le script :
 `cd C:\SarraGstock`
 `.\deploy.ps1`
@@ -89,12 +122,12 @@ Ouvrez un terminal PowerShell **en tant qu'Administrateur**, placez-vous dans le
 9. Il génère une nouvelle clé de licence.
 10. Il optimise les caches pour la production.
 
-**2.3. Lancement de l'application**
+**3.3. Lancement de l'application**
 Une fois le script terminé avec succès :
 - Lancez `start.bat` (ou ouvrez `C:\SarraGstock\phpdesktop\phpdesktop-chrome.exe`).
 - Connectez-vous avec les identifiants par défaut.
 
-**2.4. Transfert vers le PC de production**
+**3.4. Transfert vers le PC de production**
 Une fois le déploiement terminé, vous pouvez :
 - Arrêter MariaDB portable (via `stop.bat` ou en fermant la fenêtre).
 - Copier l'intégralité du dossier `C:\SarraGstock` sur une clé USB.
@@ -103,7 +136,7 @@ Une fois le déploiement terminé, vous pouvez :
 
 ---
 
-## 3. Résolution des problèmes courants
+## 4. Résolution des problèmes courants
 
 | Problème | Cause probable | Solution |
 | :--- | :--- | :--- |
@@ -112,3 +145,5 @@ Une fois le déploiement terminé, vous pouvez :
 | **Accès refusé / 403 Forbidden** | Session obsolète après un déploiement. | Videz la table `sessions` dans la base de données portable. |
 | **Fichier .env introuvable** | La copie via robocopy a échoué. | Vérifiez les droits d'accès au dossier `C:\SarraGstock\phpdesktop\www`. |
 | **La licence n'est pas générée** | Le seeder a échoué. | Vérifiez que `php artisan db:seed --class=LicenseSeeder` fonctionne manuellement dans `C:\SarraGstock\phpdesktop\www`. |
+| **Erreur 500: CGI program sent malformed...** | Bibliothèques C++ manquantes. | Installez **VC_redist.x64** sur le PC de production. |
+| **Serveur local bloqué par le pare-feu** | phpDesktop n'est pas autorisé. | Ajoutez `phpdesktop.exe` et `php.exe` aux exceptions du Pare-feu Windows. |

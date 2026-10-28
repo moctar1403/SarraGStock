@@ -1,11 +1,11 @@
 # Configuration : Méthodes de Paiement
 
-[⬅ Retour au sommaire](../USER_GUIDE.md)
+[⬅ Retour au sommaire](/documentation/user_guide)
 
 Pour configurer vos moyens de paiement, allez dans **Configurations > Méthodes de paiement**. 
 C'est ici que vous gérez les caisses et les comptes par lesquels l'argent entre et sort de votre entreprise (Espèces, Bankily, Crédit, etc.).
 
-![Liste des méthodes de paiement](../images/liste-methodes.png)
+![Liste des méthodes de paiement](/images/docs/liste-methodes.png)
 
 ---
 
@@ -24,7 +24,7 @@ Le tableau vous donne une vue d'ensemble de la santé financière de chaque mét
 
 Cliquez sur le bouton bleu **Ajouter une méthode de paiement**.
 
-![Créer une méthode de paiement](../images/creation-methode.png)
+![Créer une méthode de paiement](/images/docs/creation-methode.png)
 
 Remplissez le formulaire :
 - **Nom** *(Obligatoire)* : Le nom de la méthode (ex: "Bankily").

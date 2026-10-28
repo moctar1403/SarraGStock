@@ -1,6 +1,6 @@
 # Trésorerie : Paiements Clients
 
-[⬅ Retour au sommaire](../USER_GUIDE.md)
+[⬅ Retour au sommaire](/documentation/user_guide)
 
 Ce module vous permet d'enregistrer les règlements (encaissements) effectués par vos clients. Il est principalement utilisé pour solder les ventes à crédit.
 
@@ -10,7 +10,7 @@ Pour y accéder, allez dans **Clients > Liste Paiements**.
 
 ## 1. Consulter l'historique des paiements
 
-![Liste des paiements clients](../images/liste-paiements-clients.png)
+![Liste des paiements clients](/images/docs/liste-paiements-clients.png)
 
 L'écran affiche la liste de tous les règlements reçus :
 - Le **Client**.
@@ -33,7 +33,7 @@ Si vous avez enregistré un paiement par erreur, cliquez sur le bouton rouge **S
 
 Pour encaisser de l'argent, cliquez sur le bouton bleu **Nouveau paiement**.
 
-![Formulaire de paiement client](../images/creation-paiement-client.png)
+![Formulaire de paiement client](/images/docs/creation-paiement-client.png)
 
 1. **Sélectionner un client** *(Obligatoire)* : 
    - Seuls les clients ayant une **dette (situation > 0)** apparaissent dans cette liste déroulante. Si un client n'apparaît pas, c'est qu'il vous doit 0.

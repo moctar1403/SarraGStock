@@ -1,6 +1,6 @@
 # Sorties des Articles (Pertes, Casses, etc.)
 
-[⬅ Retour au sommaire](../USER_GUIDE.md)
+[⬅ Retour au sommaire](/documentation/user_guide)
 
 Pour gérer les sorties de stock (pertes, casses, péremptions), allez dans **Articles > Sorties des Articles**. 
 
@@ -12,7 +12,7 @@ Cet écran vous permet de retirer des articles du stock **sans qu'ils soient ven
 
 ## 1. Consulter l'historique des sorties
 
-![Liste des sorties de stock](../images/liste-sorties.png)
+![Liste des sorties de stock](/images/docs/liste-sorties.png)
 
 L'écran affiche la liste de tous les mouvements de sortie. Pour vous aider à vous y retrouver, un **badge de couleur** indique le motif de la sortie :
 
@@ -30,7 +30,7 @@ Vous pouvez annuler une **Perte** en cliquant sur le bouton rouge **Supprimer**.
 
 Pour déclarer une perte ou une casse, cliquez sur le bouton bleu **Nouvelle sortie de stock**.
 
-![Formulaire de sortie de stock](../images/creation-sortie.png)
+![Formulaire de sortie de stock](/images/docs/creation-sortie.png)
 
 1. **Sélectionner un article** *(Obligatoire)* : Choisissez l'article dans la liste déroulante. 
    *(Astuce : Vous pouvez utiliser la "Recherche rapide" en tapant l'ID, la Référence ou le Code-barres).*

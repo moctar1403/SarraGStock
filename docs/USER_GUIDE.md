@@ -1,16 +1,33 @@
 # Manuel Utilisateur - SarraGStock
 
 Bienvenue dans le manuel d'utilisation de **SarraGStock**. 
-Ce guide est découpé par modules pour vous permettre de trouver rapidement l'information dont vous avez besoin.
+Pour faciliter la navigation, ce guide est découpé par modules. Cliquez sur un lien pour accéder à la documentation détaillée de la section qui vous intéresse.
 
 ## 📋 Sommaire des modules
 
-1. [Connexion et Tableau de bord](modules/demarrage.md)
-2. [Gestion des Articles (Catalogue)](modules/articles.md)
-3. [Gestion des Tiers (Clients & Fournisseurs)](modules/tiers.md)
-4. [Enregistrer une Vente](modules/ventes.md)
-5. [Gérer les Achats (Entrées de stock)](modules/achats.md)
-6. [Sorties de Stock & Inventaire](modules/inventaire.md)
+### 🚀 Démarrage
+- [Connexion et Tableau de bord](/documentation/demarrage)
+- [Prérequis d'installation sur PC](/documentation/prerequis-client)
+
+### 📦 Gestion des Articles et du Stock
+- [Gestion des Articles (Catalogue)](/documentation/articles)
+- [Inventaire des Articles](/documentation/inventaire)
+- [Sorties des Articles (Pertes, Casses)](/documentation/sorties)
+
+### 🤝 Gestion des Tiers
+- [Clients et Fournisseurs](/documentation/tiers)
+
+### 🛒 Ventes et Achats
+- [Enregistrer une Vente (Facturation)](/documentation/ventes)
+- [Gérer les Achats (Entrées en stock)](/documentation/achats)
+
+### 💰 Trésorerie (Paiements)
+- [Paiements Clients](/documentation/tresorerie-clients)
+- [Paiements Fournisseurs](/documentation/tresorerie-fournisseurs)
+
+### ⚙️ Configuration
+- [Méthodes de Paiement](/documentation/methodes-paiement)
 
 ---
-💡 **Besoin d'aide technique ?** Consultez le [Guide de Dépannage](TROUBLESHOOTING.md) ou le [Manuel Administrateur](ADMIN_GUIDE.md).
+💡 **Besoin d'aide ?** 
+Si vous rencontrez un problème avec l'application, veuillez contacter votre administrateur système.

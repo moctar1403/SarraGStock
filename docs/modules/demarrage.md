@@ -1,6 +1,6 @@
 # Démarrage : Connexion et Tableau de bord
 
-[⬅ Retour au sommaire](../USER_GUIDE.md)
+[⬅ Retour au sommaire](/documentation/user_guide)
 
 ## 1. Connexion à l'application
 

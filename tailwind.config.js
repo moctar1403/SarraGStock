@@ -10,6 +10,9 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
     ],
+    plugins: [
+        require('@tailwindcss/typography'),
+    ],
 
     theme: {
         extend: {

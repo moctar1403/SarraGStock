@@ -1,6 +1,6 @@
 # Trésorerie : Paiements Fournisseurs
 
-[⬅ Retour au sommaire](../USER_GUIDE.md)
+[⬅ Retour au sommaire](/documentation/user_guide)
 
 Ce module vous permet d'enregistrer les décaissements (paiements) que vous effectuez pour régler vos dettes envers vos fournisseurs. Il est utilisé pour solder les achats de marchandises.
 
@@ -10,7 +10,7 @@ Pour y accéder, allez dans **Fournisseurs > Liste Paiements Fournisseurs**.
 
 ## 1. Consulter l'historique des paiements
 
-![Liste des paiements fournisseurs](../images/liste-paiements-fournisseurs.png)
+![Liste des paiements fournisseurs](/images/docs/liste-paiements-fournisseurs.png)
 
 L'écran affiche la liste de tous les règlements effectués :
 - Le **Fournisseur**.
@@ -32,7 +32,7 @@ Si vous avez enregistré un paiement par erreur, cliquez sur le bouton rouge **S
 
 Pour payer un fournisseur, cliquez sur le bouton bleu **Nouveau paiement Fournisseur**.
 
-![Formulaire de paiement fournisseur](../images/creation-paiement-fournisseur.png)
+![Formulaire de paiement fournisseur](/images/docs/creation-paiement-fournisseur.png)
 
 1. **Sélectionner un fournisseur** *(Obligatoire)* : 
    - Seuls les fournisseurs envers qui vous avez une **dette (situation > 0)** apparaissent dans cette liste.

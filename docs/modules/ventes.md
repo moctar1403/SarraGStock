@@ -1,6 +1,6 @@
 # Enregistrer une Vente (Facturation)
 
-[⬅ Retour au sommaire](../USER_GUIDE.md)
+[⬅ Retour au sommaire](/documentation/user_guide)
 
 Le menu **Ventes** vous permet d'enregistrer une nouvelle transaction, de gérer vos factures et de suivre vos encaissements. C'est l'écran le plus utilisé au quotidien.
 
@@ -10,7 +10,7 @@ Le menu **Ventes** vous permet d'enregistrer une nouvelle transaction, de gérer
 
 Pour enregistrer une vente, allez dans **Ventes > Nouvelle vente**.
 
-![Écran de création d'une vente](../images/creation-vente.png)
+![Écran de création d'une vente](/images/docs/creation-vente.png)
 
 L'écran se divise en 3 grandes parties.
 
@@ -66,7 +66,7 @@ Le bouton vert en bas à gauche affiche le **Montant Total** à encaisser.
 
 Le menu **Ventes** (ou **Factures**) affiche l'historique de toutes vos transactions.
 
-![Liste des factures](../images/liste-factures.png)
+![Liste des factures](/images/docs/liste-factures.png)
 
 Chaque ligne représente une facture et affiche :
 - La **Date** de la vente.
@@ -91,7 +91,7 @@ Chaque ligne représente une facture et affiche :
 
 Lorsque vous cliquez sur l'icône d'impression ou de détails, l'application génère un document formaté.
 
-![Aperçu d'une facture](../images/facture-apercu.png)
+![Aperçu d'une facture](/images/docs/facture-apercu.png)
 
 - **En-tête** : Affiche le numéro de facture, la date, les informations du vendeur et du client.
 - **Corps** : La liste des articles vendus avec la quantité, l'unité, le prix unitaire et le total par ligne.
