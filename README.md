@@ -1,66 +1,144 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SarraGStock - Gestion de Stock
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Application de gestion de stock et de facturation, développée avec Laravel et Livewire. 
+Elle est conçue pour être déployée en local (portable) via PHPDesktop et MariaDB portable, sans nécessiter l'installation d'un serveur web classique.
 
-## About Laravel
+## 🚀 Fonctionnalités
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Gestion des articles** : Ajout, modification, suppression, gestion des stocks et des seuils d'alerte.
+- **Gestion des tiers** : Clients et fournisseurs.
+- **Ventes et Factures** : Création de factures, gestion des remises, impression et export PDF.
+- **Achats et Approvisionnements** : Fournisseurs, entrées et sorties de stock.
+- **Trésorerie** : Suivi des paiements (clients et fournisseurs), gestion des méthodes de paiement (Espèces, Bankily, etc.).
+- **Inventaire** : Ajustements de stock et historique.
+- **Sécurité et Rôles** : Gestion des utilisateurs, des rôles et des permissions (basé sur `spatie/laravel-permission`).
+- **Licence** : Système d'activation par clé de licence.
+- **Traçabilité** : Journal des actions (traces) et journal d'activité.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🏗️ Architecture des dossiers
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Le projet repose sur une séparation stricte entre l'environnement de développement et l'environnement portable de production.
 
-## Learning Laravel
+### 1. Environnement de développement (WAMP)
+- **Chemin** : `C:\wamp64\www\SarraGStock`
+- **Rôle** : C'est ici que le code source est développé, testé et versionné avec Git. 
+- **Base de données** : Utilise MySQL/MariaDB de WAMP (généralement sur le port 3306).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 2. Environnement portable (Production)
+- **Chemin** : `C:\SarraGstock`
+- **Rôle** : C'est le dossier qui sera copié sur la clé USB et déployé sur le PC de production.
+- **Contenu** :
+  - `deploy.ps1` : Script de déploiement automatisé.
+  - `start.bat` / `stop.bat` : Scripts pour démarrer et arrêter l'application.
+  - `licence/` : Contient la clé de licence générée.
+  - `sql/` : Contient les sauvegardes de la base de données.
+  - `mariadb/` : Le serveur de base de données portable.
+  - `php/` : L'interpréteur PHP portable.
+  - `phpdesktop/` : L'application (interface) et le dossier `www` qui recevra la copie du code source.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+**Fonctionnement du déploiement** : Le script `deploy.ps1` va copier le code source depuis `C:\wamp64\www\SarraGStock` vers `C:\SarraGstock\phpdesktop\www`, configurer l'environnement, importer la base de données et générer la licence. Ensuite, l'ensemble du dossier `C:\SarraGstock` est prêt à être copié sur le PC de production.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠️ Prérequis (Environnement de développement)
 
-## Laravel Sponsors
+- PHP 8.2 ou supérieur
+- Composer
+- Node.js & NPM
+- MySQL ou MariaDB (WAMP/XAMPP)
+- Git
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 💻 Installation (Développement)
 
-### Premium Partners
+1. **Cloner le dépôt**
+   `git clone <votre-url-git> SarraGStock`
+   `cd SarraGStock`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+2. **Installer les dépendances PHP**
+   `composer install`
 
-## Contributing
+3. **Installer les dépendances Frontend**
+   `npm install`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4. **Configuration de l'environnement**
+   `cp .env.example .env`
+   `php artisan key:generate`
+   *Modifiez le fichier `.env` avec vos identifiants de base de données locales (port 3306).*
 
-## Code of Conduct
+5. **Créer la base de données et lancer les migrations**
+   `php artisan migrate`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+6. **Peupler la base avec les données de base**
+   `php artisan db:seed`
+   *(Les seeders vont créer les rôles, permissions, utilisateurs par défaut, monnaies, unités, etc.)*
 
-## Security Vulnerabilities
+7. **Compiler les assets (Frontend)**
+   `npm run build`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+8. **Lancer le serveur de développement**
+   `php artisan serve`
+   *L'application sera accessible sur `http://127.0.0.1:8000`.*
 
-## License
+## 📦 Déploiement (Production Portable)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. **Préparation**
+   - Assurez-vous que le dossier `C:\SarraGstock` contient bien tous les outils portables (`mariadb`, `php`, `phpdesktop`, etc.).
+   - Ouvrez un terminal **PowerShell en tant qu'Administrateur**.
+
+2. **Exécution du script**
+   `cd C:\SarraGstock`
+   `.\deploy.ps1`
+   *Le script va :*
+   - Sauvegarder la base de données de développement.
+   - Compiler les assets (NPM).
+   - Copier les fichiers depuis `C:\wamp64\www\SarraGStock` vers `C:\SarraGstock\phpdesktop\www`.
+   - Démarrer MariaDB portable sur le port `3312`.
+   - Importer la base de données.
+   - Configurer le fichier `.env`.
+   - Générer une clé de licence.
+
+3. **Lancement de l'application**
+   - Utilisez le script `start.bat` ou ouvrez directement `C:\SarraGstock\phpdesktop\phpdesktop-chrome.exe`.
+
+## 🔑 Comptes par défaut (après seed)
+
+- **Super Admin** : `superadmin@test.com` / `password`
+- **Admin** : `admin@test.com` / `password`
+
+*(⚠️ Il est impératif de changer ces mots de passe lors de la première connexion en production).*
+
+## 💾 Sauvegarde et Restauration
+
+Pour éviter toute perte de données en cas d'incident sur le PC de développement, il est crucial de sauvegarder trois éléments distincts : **le code**, **les outils portables** et **la base de données**.
+
+### 1. Sauvegarde du Code (Git)
+Le code source est versionné avec Git. Pour le sauvegarder sur un dépôt distant (GitHub, GitLab, etc.) :
+`git push origin main` (et n'oubliez pas de pousser les tags avec `git push origin --tags`).
+
+### 2. Sauvegarde des Outils Portables (ZIP)
+Les dossiers `mariadb`, `php`, et `phpdesktop` ne doivent pas être dans Git (trop lourds). Pour les sauvegarder :
+1. Arrêtez l'application et assurez-vous qu'aucun processus `mysqld.exe` ne tourne.
+2. Faites un clic droit sur le dossier `C:\SarraGstock` et compressez-le en ZIP (ex: `SarraGstock_Tools_2026-10-21.zip`).
+3. Copiez cette archive sur un support externe (clé USB) et/ou sur un Cloud (Google Drive, OneDrive).
+
+### 3. Sauvegarde de la Base de Données (SQL)
+Exportez régulièrement votre base de développement (WAMP) via phpMyAdmin (onglet "Exporter" de la base `gestock1`). 
+Conservez ces fichiers `.sql` dans un endroit sûr (Cloud ou clé USB).
+
+### 🚑 Que faire en cas de perte totale du PC de développement ?
+Si vous devez réinstaller l'environnement sur un nouveau PC, voici la procédure de restauration :
+1. **Clonez** votre projet Git (`git clone ...`).
+2. **Extrayez** l'archive ZIP des outils portables (pour recréer le dossier `C:\SarraGstock`).
+3. **Importez** votre dernier fichier `.sql` dans WAMP (ou dans le dossier `C:\SarraGstock\sql` selon la méthode de restauration choisie).
+4. **Lancez** le script `.\deploy.ps1` pour reconstruire l'environnement portable et générer une nouvelle licence.
+
+## 📚 Documentation
+
+La documentation complète est disponible dans le dossier `docs/`.
+
+- [Manuel d'installation (Production)](docs/INSTALLATION.md)
+- [Manuel Utilisateur](docs/USER_GUIDE.md)
+- [Manuel Administrateur](docs/ADMIN_GUIDE.md)
+- [Guide de Dépannage](docs/TROUBLESHOOTING.md)
+
+## 📝 Licence
+
+Ce projet est sous licence propriétaire. Toute reproduction ou distribution sans autorisation est interdite.
