@@ -679,7 +679,12 @@
     "⚙️ Méthodes de paiement": "⚙️ طرق الدفع",
     "🔐 Guide Administrateur": "🔐 دليل المدير",
     "Retour au tableau de bord": "العودة إلى لوحة القيادة",
-    "📚 Manuel": "📚 دَلِيلُ الْمُسْتَخْدِمِ"
-
+    "📚 Manuel": "📚 دَلِيلُ الْمُسْتَخْدِمِ",
+    "Mot de passe (laisser vide pour ne pas changer)": "كلمة المرور (اتركها فارغة لعدم التغيير)",
+    "Compte protégé": "حساب محمي",
+    "Le nom, l'email et les rôles de ce compte administrateur principal ne peuvent pas être modifiés. Vous pouvez uniquement changer le mot de passe ci-dessous.": "لا يمكن تعديل الاسم والبريد الإلكتروني والأدوار لهذا الحساب الإداري الرئيسي. يمكنك فقط تغيير كلمة المرور أدناه.",
+    "Mot de passe administrateur mis à jour.": "تم تحديث كلمة مرور المسؤول بنجاح.",
+    "Mot de passe administrateur mis à jour": "تم تحديث كلمة مرور المسؤول بنجاح",
+    "Impossible de supprimer ce compte administrateur principal.": "لا يمكن حذف هذا الحساب الإداري الرئيسي."
    
 }

@@ -300,4 +300,8 @@ Route::middleware([
             'current_page' => $page
         ]);
     })->name('documentation.show');
+    // AJOUTE CETTE LIGNE ICI (avant la fermeture du groupe)
+    Route::get('/user/profile', function () {
+        return redirect()->route('dashboard')->with('danger', 'La gestion de profil est désactivée.');
+    })->name('profile.show');
 });

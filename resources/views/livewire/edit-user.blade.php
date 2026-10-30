@@ -7,32 +7,43 @@
                     @csrf
                     @method('PUT')
                     
-                    <div class="p-5 flex flex-col">
-                        <label for="name">{{ __('Nom') }}</label>
-                        <input type="text" 
-                               id="name"
-                               class="block mt-1 rounded-md border-gray-300 w-full @error('name') border-red-500 bg-red-100 @enderror"
-                               name="name"
-                               wire:model.live="name">
-                        @error('name')
-                            <div class="text-red-500 mt-1">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    {{-- Si l'utilisateur est un admin/super-admin, on cache le nom, l'email et les rôles --}}
+                    @if($user->hasRole('super-admin') || $user->hasRole('admin'))
+                        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6" role="alert">
+                            <p class="font-bold">{{ __('Compte protégé') }}</p>
+                            <p>{{ __('Le nom, l\'email et les rôles de ce compte administrateur ne peuvent pas être modifiés. Vous pouvez uniquement changer le mot de passe ci-dessous.') }}</p>
+                        </div>
+                    @else
+                        {{-- Champ Nom (Visible seulement pour les utilisateurs normaux) --}}
+                        <div class="p-5 flex flex-col">
+                            <label for="name">{{ __('Nom') }}</label>
+                            <input type="text" 
+                                   id="name"
+                                   class="block mt-1 rounded-md border-gray-300 w-full @error('name') border-red-500 bg-red-100 @enderror"
+                                   name="name"
+                                   wire:model.live="name">
+                            @error('name')
+                                <div class="text-red-500 mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        
+                        {{-- Champ Email (Visible seulement pour les utilisateurs normaux) --}}
+                        <div class="p-5 flex flex-col">
+                            <label for="email">{{ __('Email') }}</label>
+                            <input type="email" 
+                                   id="email"
+                                   class="block mt-1 rounded-md border-gray-300 w-full @error('email') border-red-500 bg-red-100 @enderror"
+                                   name="email" 
+                                   wire:model.live="email">
+                            @error('email')
+                                <div class="text-red-500 mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    @endif
                     
+                    {{-- Champ Mot de passe (Toujours visible) --}}
                     <div class="p-5 flex flex-col">
-                        <label for="email">{{ __('Email') }}</label>
-                        <input type="email" 
-                               id="email"
-                               class="block mt-1 rounded-md border-gray-300 w-full @error('email') border-red-500 bg-red-100 @enderror"
-                               name="email" 
-                               wire:model.live="email">
-                        @error('email')
-                            <div class="text-red-500 mt-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    
-                    <div class="p-5 flex flex-col">
-                        <label for="password">{{ __('Mot de passe') }}</label>
+                        <label for="password">{{ __('Mot de passe (laisser vide pour ne pas changer)') }}</label>
                         <input type="password" 
                                id="password"
                                class="block mt-1 rounded-md border-gray-300 w-full @error('password') border-red-500 bg-red-100 @enderror"
@@ -43,6 +54,7 @@
                         @enderror
                     </div>
                     
+                    {{-- Champ Confirmation Mot de passe (Toujours visible) --}}
                     <div class="p-5 flex flex-col">
                         <x-label for="password_confirmation" value="{{ __('Confirmation mot de passe') }}" />
                         <input type="password" 
@@ -55,33 +67,38 @@
                         @enderror
                     </div>
                     
-                    <div class="p-5 flex flex-col">
-                        <label for="roles2">{{ __('Rôles') }}</label>
-                        <select id="roles2"
-                                class="block mt-1 rounded-md border-gray-300 @error('roles2') border-red-500 bg-red-100 @enderror"
-                                name="roles2[]" 
-                                wire:model.live="roles2"  
-                                multiple>
-                            <option value="">{{ __('Sélectionner un rôle') }}</option>
-                            @foreach ($roles as $role)
-                                <option value="{{$role}}" @if(in_array($role,$userRoles)) selected @endif>
-                                    {{$role}}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('roles2')
-                            <div class="text-red-500 mt-1">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    {{-- Champ Rôles (Visible seulement pour les utilisateurs normaux) --}}
+                    @if(!$user->hasRole('super-admin') && !$user->hasRole('admin'))
+                        <div class="p-5 flex flex-col">
+                            <label for="roles2">{{ __('Rôles') }}</label>
+                            <select id="roles2"
+                                    class="block mt-1 rounded-md border-gray-300 @error('roles2') border-red-500 bg-red-100 @enderror"
+                                    name="roles2[]" 
+                                    wire:model.live="roles2"  
+                                    multiple>
+                                <option value="">{{ __('Sélectionner un rôle') }}</option>
+                                @foreach ($roles as $role)
+                                    <option value="{{$role}}" @if(in_array($role,$userRoles)) selected @endif>
+                                        {{$role}}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('roles2')
+                                <div class="text-red-500 mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    @endif
                     
                     <div class="p-5 flex justify-between items-center bg-gray-100">
-                        <button class="bg-green-600 p-3 rounded-sm text-white text-sm" type="submit">{{ __('Modifier') }}</button>
+                        <button class="bg-green-600 hover:bg-green-700 p-3 rounded-sm text-white text-sm" type="submit">
+                            {{ __('Modifier') }}
+                        </button>
                     </div>
                 </form>
             </div>
             
             <div class="p-8 text-gray-900">
-                <a href="{{ url('users') }}" class="bg-red-500 rounded-md p-2 text-white">
+                <a href="{{ url('users') }}" class="bg-red-500 hover:bg-red-600 rounded-md p-2 text-white">
                     {{ __('Retour') }}
                 </a> 
             </div>

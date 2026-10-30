@@ -59,10 +59,11 @@
                                                             'url' => route('users.edit', $item->id),
                                                             'texte' => __('Editer')
                                                         ])
-                                                    @endcan
-                                                    
+                                                    @endcan                                                    
                                                     @can('delete user')
-                                                        @include('partials.boutton_supprimer')
+                                                        @if(!in_array($item->id, [1, 2]))
+                                                            @include('partials.boutton_supprimer')
+                                                        @endif
                                                     @endcan
                                                 </div>
                                             </td>

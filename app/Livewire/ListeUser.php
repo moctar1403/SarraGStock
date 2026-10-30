@@ -13,26 +13,33 @@ class ListeUser extends Component
     use WithDelete {
         delete as protected traitDelete;
     }
-    public function delete()
+
+        public function delete()
     {
-        $user=User::where('id','=',$this->deleteId)->first();
+        $user = User::where('id', '=', $this->deleteId)->first();
          
-        // Test si user est super-admin
-        if ($user->name=="super-admin") {
-            $data="tenter de supprimer super-admin".$user->name." ".$user->email;
-            $model="App\Models\User";
-            trace($data,$model); 
-            return redirect('users')->with('danger',$user->name.' ne peut pas être supprimé');
+        // Protection des comptes ID 1 et 2
+        if (in_array($user->id, [1, 2])) {
+            $data = "Tentative de suppression d'un compte protégé : " . $user->name;
+            $model = "App\Models\User";
+            trace($data, $model); 
+            
+            return redirect('users')->with('danger', __('Impossible de supprimer ce compte administrateur principal.'));
         }
-        $data="delete user ".$user->name." ".$user->email;
-        $model="App\Models\User";
-        trace($data,$model);   
+
+        // Si c'est un autre utilisateur, on supprime
+        $data = "Suppression de l'utilisateur " . $user->name;
+        $model = "App\Models\User";
+        trace($data, $model);   
+        
         $user->delete();
-        return redirect('users')->with('succes',__('Utilisateur supprimé avec succès'));
+        
+        return redirect('users')->with('success', __('Utilisateur supprimé avec succès'));
     }
+
     public function render()
     {
-        $users=User::get();
-        return view('livewire.liste-user',compact('users'));
+        $users = User::get();
+        return view('livewire.liste-user', compact('users'));
     }
 }

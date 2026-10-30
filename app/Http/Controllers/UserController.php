@@ -95,42 +95,91 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+        public function update(Request $request, User $user)
     {
-        // dd($request->roles);
-        if ($user->name=="super-admin") {
+        // Protection des comptes ID 1 et 2
+        if (in_array($user->id, [1, 2])) {
+            
             $request->validate([
-            'name'=>'required|string|min:3|max:20|unique:users,name,'.$user->id,
-            'email'=>'required|email|unique:users,email,'.$user->id,
-            'password'=>'required|string|min:4|max:20|confirmed',
-            // 'roles'=>'required',
+                'password' => 'nullable|string|min:4|max:20|confirmed',
             ]);
+
+            if ($request->filled('password')) {
+                $user->update([
+                    'password' => Hash::make($request->password),
+                ]);
+                
+                $data = "update password admin " . $user->name;
+                $model = "App\Models\User";
+                trace($data, $model);
+            }
+
+            return redirect('users')->with('success', __('Mot de passe administrateur mis à jour.'));
         }
-        else {
-            $request->validate([
-            'name'=>'required|string|min:3|max:20|unique:users,name,'.$user->id,
-            'email'=>'required|email|unique:users,email,'.$user->id,
-            'password'=>'required|string|min:4|max:20|confirmed',
-            'roles'=>'required',
-            ]);
-        }
+
+        // Pour tous les autres utilisateurs
+        $request->validate([
+            'name' => 'required|string|min:3|max:20|unique:users,name,'.$user->id,
+            'email' => 'required|email|unique:users,email,'.$user->id,
+            'password' => 'nullable|string|min:4|max:20|confirmed',
+            'roles' => 'required',
+        ]);
         
         $user->update([
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'password'=>Hash::make($request->password),
+            'name' => $request->name,
+            'email' => $request->email,
         ]);
-        //trace
-        $data="update user ".$user->name." ".$user->email;
-        $model="App\Models\User";
-        trace($data,$model);
-        if ($user->name=="super-admin") {
+
+        if ($request->filled('password')) {
+            $user->update([
+                'password' => Hash::make($request->password),
+            ]);
         }
-        else {
-            $user->syncRoles($request->roles);
-        }   
-        return redirect('users')->with('succes',__("Utilisateur mis à jour avec succès avec les rôles"));
+
+        $data = "update user " . $user->name . " " . $user->email;
+        $model = "App\Models\User";
+        trace($data, $model);
+        
+        $user->syncRoles($request->roles);   
+        
+        return redirect('users')->with('success', __("Utilisateur mis à jour avec succès avec les rôles"));
     }
+    // public function update(Request $request, User $user)
+    // {
+    //     // dd($request->roles);
+    //     if ($user->name=="super-admin") {
+    //         $request->validate([
+    //         'name'=>'required|string|min:3|max:20|unique:users,name,'.$user->id,
+    //         'email'=>'required|email|unique:users,email,'.$user->id,
+    //         'password'=>'required|string|min:4|max:20|confirmed',
+    //         // 'roles'=>'required',
+    //         ]);
+    //     }
+    //     else {
+    //         $request->validate([
+    //         'name'=>'required|string|min:3|max:20|unique:users,name,'.$user->id,
+    //         'email'=>'required|email|unique:users,email,'.$user->id,
+    //         'password'=>'required|string|min:4|max:20|confirmed',
+    //         'roles'=>'required',
+    //         ]);
+    //     }
+        
+    //     $user->update([
+    //         'name'=>$request->name,
+    //         'email'=>$request->email,
+    //         'password'=>Hash::make($request->password),
+    //     ]);
+    //     //trace
+    //     $data="update user ".$user->name." ".$user->email;
+    //     $model="App\Models\User";
+    //     trace($data,$model);
+    //     if ($user->name=="super-admin") {
+    //     }
+    //     else {
+    //         $user->syncRoles($request->roles);
+    //     }   
+    //     return redirect('users')->with('succes',__("Utilisateur mis à jour avec succès avec les rôles"));
+    // }
 
     /**
      * Remove the specified resource from storage.
