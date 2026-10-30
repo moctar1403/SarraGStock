@@ -1,5 +1,5 @@
 {{-- Vérification des permissions --}}
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 {{ session('locale') === 'ar' ? 'flex-row-reverse' : '' }}">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div class="flex justify-between h-10">
@@ -62,7 +62,7 @@
                         </x-nav-link>
                     @endcan
                     <x-nav-link :href="route('documentation')" :active="request()->routeIs('documentation*')">
-                        {{ __('📚 Documentation') }}
+                        {{ __('📚 Manuel') }}
                     </x-nav-link>
                     {{-- Sélecteur de langue --}}
                     <div class="border-l border-gray-300 mx-2 h-6 self-center"></div>

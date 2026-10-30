@@ -660,6 +660,26 @@
     "Méthode de paiement modifiée avec succès": "تم تغيير طريقة الدفع بنجاح",
     "Méthode de paiement créée avec succès": "تم إنشاء طريقة الدفع بنجاح",
     "Méthode de paiement ou Type": "طريقة الدفع أو النوعية",
-    "": ""
+    "Manuel": "دَلِيلُ الْمُسْتَخْدِمِ",
+    "📚 Sommaire": "📚 الفهرس",
+    "🏠 Accueil (Guide)": "🏠 الرئيسية (الدليل)",
+    "DÉMARRAGE": "البدء",
+    "🚀 Lancer l'application": "🚀 تشغيل التطبيق",
+    "💻 Prérequis PC": "💻 متطلبات الكمبيوتر",
+    "MODULES": "الوحدات",
+    "📦 Articles & Stock": "📦 المواد والمخزون",
+    "🛒 Ventes & Factures": "🛒 المبيعات والفواتير",
+    "🚚 Achats (Entrées)": "🚚 المشتريات (الإدخالات)",
+    "🤝 Clients & Fournisseurs": "🤝 الزبناء والموردون",
+    "💰 Paiements Clients": "💰 مدفوعات الزبناء",
+    "💸 Paiements Fournisseurs": "💸 مدفوعات الموردين",
+    "📉 Sorties (Pertes)": "📉 الإخراجات (الفاقد)",
+    "📊 Inventaire": "📊 الجرد",
+    "CONFIGURATION": "التكوين",
+    "⚙️ Méthodes de paiement": "⚙️ طرق الدفع",
+    "🔐 Guide Administrateur": "🔐 دليل المدير",
+    "Retour au tableau de bord": "العودة إلى لوحة القيادة",
+    "📚 Manuel": "📚 دَلِيلُ الْمُسْتَخْدِمِ"
+
    
 }

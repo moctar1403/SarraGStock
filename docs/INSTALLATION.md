@@ -106,7 +106,8 @@ L'application utilise un système portable (MariaDB + PHP + phpDesktop) pour fon
 Assurez-vous que votre code source de développement (`C:\wamp64\www\SarraGStock`) est à jour et fonctionnel.
 
 **3.2. Exécution du script de déploiement**
-Ouvrez un terminal PowerShell **en tant qu'Administrateur**, placez-vous dans le dossier portable et lancez le script :
+-Sur pc dev ouvrir Powershell **en tant qu'Administrateur**, placez-vous dans le dossier (`C:\wamp64\www\SarraGStock`) et lancez la CMD (`php artisan db:seed`)
+-Ouvrez un terminal PowerShell **en tant qu'Administrateur**, placez-vous dans le dossier portable et lancez le script :
 `cd C:\SarraGstock`
 `.\deploy.ps1`
 

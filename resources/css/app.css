@@ -5,3 +5,49 @@
 [x-cloak] {
     display: none;
 }
+
+/* =========================================
+   CORRECTIONS RTL (ARABE) 
+   Doivent être placées TOUT EN BAS pour écraser Tailwind
+   ========================================= */
+
+/* 1. Inverser les lignes flex (ex: mettre le menu à droite) */
+[dir="rtl"] .flex-row {
+    flex-direction: row-reverse !important;
+}
+
+/* 2. Forcer l'alignement à droite pour le texte */
+[dir="rtl"] .text-left {
+    text-align: right !important;
+}
+
+/* 3. Inverser les marges automatiques */
+[dir="rtl"] .ml-auto {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+}
+[dir="rtl"] .mr-auto {
+    margin-right: 0 !important;
+    margin-left: auto !important;
+}
+
+/* 4. Inverser les alignements de justification */
+[dir="rtl"] .justify-start {
+    justify-content: flex-end !important;
+}
+[dir="rtl"] .justify-end {
+    justify-content: flex-start !important;
+}
+
+/* 5. Contenu Markdown (Documentation) */
+[dir="rtl"] .prose {
+    text-align: right !important;
+}
+[dir="rtl"] .prose ul {
+    padding-right: 1.5rem !important;
+    padding-left: 0 !important;
+}
+[dir="rtl"] .prose ol {
+    padding-right: 1.5rem !important;
+    padding-left: 0 !important;
+}

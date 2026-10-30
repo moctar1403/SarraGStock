@@ -257,21 +257,25 @@ Route::middleware([
     // Affichage d'une page spécifique
     Route::get('/documentation/{page}', function ($page) {
         
+        // On récupère la langue depuis la session (par défaut 'fr')
+        $lang = session('locale', 'fr');
+        // On définit le dossier selon la langue
+        $folder = ($lang === 'ar') ? 'docs/ar/' : 'docs/'; 
         // Sécurité : liste blanche des fichiers autorisés
         $allowedPages = [
-            'user_guide' => 'docs/USER_GUIDE.md',
-            'demarrage' => 'docs/modules/demarrage.md',
-            'prerequis-client' => 'docs/modules/prerequis-client.md', 
-            'admin_guide' => 'docs/ADMIN_GUIDE.md',
-            'articles' => 'docs/modules/articles.md',
-            'ventes' => 'docs/modules/ventes.md',
-            'achats' => 'docs/modules/achats.md',
-            'tiers' => 'docs/modules/tiers.md',
-            'inventaire' => 'docs/modules/inventaire.md',
-            'sorties' => 'docs/modules/sorties.md',
-            'tresorerie-clients' => 'docs/modules/tresorerie-clients.md',
-            'tresorerie-fournisseurs' => 'docs/modules/tresorerie-fournisseurs.md',
-            'methodes-paiement' => 'docs/modules/methodes-paiement.md',
+            'user_guide' => $folder . 'USER_GUIDE.md',
+            'demarrage' => $folder . 'modules/demarrage.md',
+            'prerequis-client' => $folder . 'modules/prerequis-client.md',
+            'articles' => $folder . 'modules/articles.md',
+            'ventes' => $folder . 'modules/ventes.md',
+            'achats' => $folder . 'modules/achats.md',
+            'tiers' => $folder . 'modules/tiers.md',
+            'inventaire' => $folder . 'modules/inventaire.md',
+            'sorties' => $folder . 'modules/sorties.md',
+            'tresorerie-clients' => $folder . 'modules/tresorerie-clients.md',
+            'tresorerie-fournisseurs' => $folder . 'modules/tresorerie-fournisseurs.md',
+            'methodes-paiement' => $folder . 'modules/methodes-paiement.md',
+            'admin_guide' => $folder . 'ADMIN_GUIDE.md',
         ];
 
         if (!array_key_exists($page, $allowedPages)) {
