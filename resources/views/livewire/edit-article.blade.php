@@ -42,36 +42,78 @@
                 <div class="text-red-500 mt-1">{{ $message }}</div>
             @enderror
         </div>
-        
-        <div class="p-5 flex flex-col">
-            <x-label value="{{ __('Quantité') }}" />
-            <input type="text"
-                class="block mt-1 rounded-md border-gray-300 w-full @error('ar_qte') border-red-500 bg-red-100 @enderror"
-                wire:model="ar_qte" name="ar_qte" readonly>
-            @error('ar_qte')
-                <div class="text-red-500 mt-1">{{ $message }}</div>
-            @enderror
+
+        <!-- Gérer le stock (Lecture seule) -->
+        <div class="p-5 flex flex-col bg-gray-50 border-t border-b">
+            <label class="inline-flex items-center cursor-not-allowed">
+                <input type="checkbox" disabled {{ $article->gerer_stock ? 'checked' : '' }} class="rounded border-gray-300 text-gray-500 shadow-sm w-5 h-5 opacity-50">
+                <span class="ml-2 text-gray-500 font-semibold">{{ __('Gérer le stock pour cet article') }}</span>
+            </label>
+            <p class="text-xs text-gray-400 mt-1 ml-7">{{ __('Ce paramètre ne peut plus être modifié après la création de l\'article.') }}</p>
         </div>
-        
-        <div class="p-5 flex flex-col">
-            <x-label value="{{ __('Quantité minimale') }}" />
-            <input type="text"
-                class="block mt-1 rounded-md border-gray-300 w-full @error('ar_qte_mini') border-red-500 bg-red-100 @enderror"
-                wire:model="ar_qte_mini" name="ar_qte_mini">
-            @error('ar_qte_mini')
-                <div class="text-red-500 mt-1">{{ $message }}</div>
-            @enderror
-        </div>
-        
-        <div class="p-5 flex flex-col">
-            <x-label value="{{ __('Prix achat') }}" />
-            <input type="text"
-                class="block mt-1 rounded-md border-gray-300 w-full @error('ar_prix_achat') border-red-500 bg-red-100 @enderror"
-                wire:model="ar_prix_achat" name="ar_prix_achat">
-            @error('ar_prix_achat')
-                <div class="text-red-500 mt-1">{{ $message }}</div>
-            @enderror
-        </div>
+
+        <!-- Affichage conditionnel selon si c'est un plat ou un article de stock -->
+        @if(!$article->gerer_stock)
+            <!-- MODE RESTO : Catégorie + Unité forcée -->
+            <div class="p-5 flex flex-col">
+                <x-label value="{{ __('Catégorie') }}" />
+                <select wire:model.live="categorie_id"
+                        class="block mt-1 rounded-md border-gray-300 w-full @error('categorie_id') border-red-500 bg-red-100 @enderror">
+                    <option value="">{{ __('Sélectionner une catégorie') }}</option>
+                    @foreach ($categoriesListe as $cat)
+                        <option value="{{ $cat->id }}">{{ __($cat->nom) }}</option>
+                    @endforeach
+                </select>
+                @error('categorie_id')
+                    <div class="text-red-500 mt-1">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="p-5 flex flex-col">
+                <x-label value="{{ __('Unité de vente') }}" />
+                <div class="mt-1 p-2 bg-gray-100 rounded-md text-gray-600 text-sm border">
+                    {{ __('Vendu à l\'unité (Article de restaurant)') }}
+                </div>
+            </div>
+        @else
+            <!-- MODE STOCK : Unité, Quantités, Prix d'achat -->
+            <div class="p-5 flex flex-col">
+                <x-label value="{{ __('Unité de vente') }}" />
+                <div class="mt-1 p-2 bg-gray-100 rounded-md text-gray-600 text-sm border">
+                    {{ __('Unité') }}
+                </div>
+            </div>
+
+            <div class="p-5 flex flex-col">
+                <x-label value="{{ __('Quantité') }}" />
+                <input type="text"
+                    class="block mt-1 rounded-md border-gray-300 w-full bg-gray-100 @error('ar_qte') border-red-500 bg-red-100 @enderror"
+                    wire:model="ar_qte" name="ar_qte" readonly>
+                @error('ar_qte')
+                    <div class="text-red-500 mt-1">{{ $message }}</div>
+                @enderror
+            </div>
+            
+            <div class="p-5 flex flex-col">
+                <x-label value="{{ __('Quantité minimale') }}" />
+                <input type="text"
+                    class="block mt-1 rounded-md border-gray-300 w-full @error('ar_qte_mini') border-red-500 bg-red-100 @enderror"
+                    wire:model="ar_qte_mini" name="ar_qte_mini">
+                @error('ar_qte_mini')
+                    <div class="text-red-500 mt-1">{{ $message }}</div>
+                @enderror
+            </div>
+            
+            <div class="p-5 flex flex-col">
+                <x-label value="{{ __('Prix achat') }}" />
+                <input type="text"
+                    class="block mt-1 rounded-md border-gray-300 w-full @error('ar_prix_achat') border-red-500 bg-red-100 @enderror"
+                    wire:model="ar_prix_achat" name="ar_prix_achat">
+                @error('ar_prix_achat')
+                    <div class="text-red-500 mt-1">{{ $message }}</div>
+                @enderror
+            </div>
+        @endif
         
         <div class="p-5 flex flex-col">
             <x-label value="{{ __('Prix vente') }}" />

@@ -1,5 +1,4 @@
 <?php
-use Illuminate\Support\Facades\Artisan;
 use App\Helpers\MachineHelper;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BackupController;
@@ -26,10 +25,17 @@ use App\Http\Controllers\TierController;
 use App\Http\Controllers\UniteController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VenteController;
-use Illuminate\Support\Facades\Route;
-use Spatie\Permission\Models\Permission;
+use App\Livewire\ClotureCaisse;
+use App\Livewire\DetailsCaisse;
+use App\Livewire\HistoriqueCaisses;
+use App\Livewire\ListeVentesResto;
+use App\Livewire\OuvrirCaisse;
+use App\Livewire\PointOfSale;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Route;
 use League\CommonMark\CommonMarkConverter;
+use Spatie\Permission\Models\Permission;
 
 /*
 |--------------------------------------------------------------------------
@@ -304,4 +310,14 @@ Route::middleware([
     Route::get('/user/profile', function () {
         return redirect()->route('dashboard')->with('danger', 'La gestion de profil est désactivée.');
     })->name('profile.show');
+        // Module Caisse (Restaurant)
+    Route::prefix('caisse')->group(function () {
+        Route::get('/ouvrir', OuvrirCaisse::class)->name('caisse.ouvrir');
+        Route::get('/pos', PointOfSale::class)->name('pos.index');
+        Route::get('/cloturer', ClotureCaisse::class)->name('caisse.cloturer');
+        Route::get('/liste', HistoriqueCaisses::class)->name('caisse.liste');
+        Route::get('/details/{id}', DetailsCaisse::class)->name('caisse.details');
+    });
+    Route::get('/ticket-facture/{facture}',[FactureController::class,'printTicket'])->name('factures.ticket');
+    Route::get('/caisse/ventes-resto', ListeVentesResto::class)->name('caisse.ventes_resto');
 });

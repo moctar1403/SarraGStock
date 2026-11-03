@@ -51,83 +51,121 @@
             @enderror
         </div>
 
-        <!-- Unité de vente -->
-        <div class="p-5 flex flex-col">
-            <x-label value="{{ __('Unité de vente') }}" />
-            <select wire:model.live="ar_unite"
-                    class="block mt-1 rounded-md border-gray-300 w-full @error('ar_unite') border-red-500 bg-red-100 @enderror">
-                <option value="">{{ __('Sélectionner une unité') }}</option>
-                @foreach ($unitesListe as $item)
-                    <option value="{{ $item->id }}">{{ __($item->unit_lib) }}</option>
-                @endforeach
-            </select>
-            @error('ar_unite')
-                <div class="text-red-500 mt-1 text-sm">{{ $message }}</div>
-            @enderror
+        <!-- Gérer le stock (Case à cocher) -->
+        <div class="p-5 flex flex-col bg-gray-50 border-t border-b">
+            <label class="inline-flex items-center cursor-pointer">
+                <input type="checkbox" wire:model.live="gerer_stock" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 w-5 h-5">
+                <span class="ml-2 text-gray-700 font-semibold">{{ __('Gérer le stock pour cet article') }}</span>
+            </label>
+            <p class="text-xs text-gray-500 mt-1 ml-7">{{ __('Décochez cette case pour un plat cuisiné ou une boisson (gestion restaurant).') }}</p>
         </div>
 
-        <!-- Quantité -->
-        <div class="p-5 flex flex-col">
-            <x-label value="{{ __('Quantité') }}" />
-            @if($ar_unite2)
-            <p class="text-green-500 text-sm mt-1">{{ __('Par') }} {{ __($ar_unite2->unit_lib) }}</p>
-            @endif
-            <input type="text"
-                   class="block mt-1 rounded-md border-gray-300 w-full @error('ar_qte') border-red-500 bg-red-100 @enderror"
-                   wire:model.blur="ar_qte" 
-                   name="ar_qte">
-            @error('ar_qte')
-                <div class="text-red-500 mt-1 text-sm">{{ $message }}</div>
-            @enderror
-        </div>
+        <!-- Catégorie (Uniquement si on ne gère PAS le stock) -->
+        @if(!$gerer_stock)
+            <div class="p-5 flex flex-col">
+                <x-label value="{{ __('Catégorie') }}" />
+                <select wire:model.live="categorie_id"
+                        class="block mt-1 rounded-md border-gray-300 w-full @error('categorie_id') border-red-500 bg-red-100 @enderror">
+                    <option value="">{{ __('Sélectionner une catégorie') }}</option>
+                    @foreach ($categoriesListe as $cat)
+                        <option value="{{ $cat->id }}">{{ __($cat->nom) }}</option>
+                    @endforeach
+                </select>
+                @error('categorie_id')
+                    <div class="text-red-500 mt-1 text-sm">{{ $message }}</div>
+                @enderror
+            </div>
+        @endif
 
-        <!-- Quantité minimale -->
-        <div class="p-5 flex flex-col">
-            <x-label value="{{ __('Quantité minimale') }}" />
-            @if($ar_unite2)
-            <p class="text-green-500 text-sm mt-1">{{ __('Par') }} {{ __($ar_unite2->unit_lib) }}</p>
-            @endif
-            <input type="text"
-                   class="block mt-1 rounded-md border-gray-300 w-full @error('ar_qte_mini') border-red-500 bg-red-100 @enderror"
-                   wire:model="ar_qte_mini" 
-                   name="ar_qte_mini">
-            @error('ar_qte_mini')
-                <div class="text-red-500 mt-1 text-sm">{{ $message }}</div>
-            @enderror
-        </div>
+        <!-- Unité de vente (Affiché seulement si on gère le stock) -->
+        @if($gerer_stock)
+            <div class="p-5 flex flex-col">
+                <x-label value="{{ __('Unité de vente') }}" />
+                <select wire:model.live="ar_unite"
+                        class="block mt-1 rounded-md border-gray-300 w-full @error('ar_unite') border-red-500 bg-red-100 @enderror">
+                    <option value="">{{ __('Sélectionner une unité') }}</option>
+                    @foreach ($unitesListe as $item)
+                        <option value="{{ $item->id }}">{{ __($item->unit_lib) }}</option>
+                    @endforeach
+                </select>
+                @error('ar_unite')
+                    <div class="text-red-500 mt-1 text-sm">{{ $message }}</div>
+                @enderror
+            </div>
+        @else
+            <div class="p-5 flex flex-col">
+                <x-label value="{{ __('Unité de vente') }}" />
+                <div class="mt-1 p-2 bg-gray-100 rounded-md text-gray-600 text-sm border">
+                    {{ __('Vendu à l\'unité (Article de restaurant)') }}
+                </div>
+            </div>
+        @endif
 
-        <!-- Prix total achat -->
-        <div class="p-5 flex flex-col">
-            <x-label value="{{ __('Prix total achat') }}" />
-            <input type="text"
-                   class="block mt-1 rounded-md border-gray-300 w-full @error('ar_prix_achat_total') border-red-500 bg-red-100 @enderror"
-                   wire:model.live="ar_prix_achat_total" 
-                   name="ar_prix_achat_total">
-            @error('ar_prix_achat_total')
-                <div class="text-red-500 mt-1 text-sm">{{ $message }}</div>
-            @enderror
-        </div>
+        <!-- Champs de stock et prix d'achat (Cachés si on ne gère pas le stock) -->
+        @if($gerer_stock)
+            <!-- Quantité -->
+            <div class="p-5 flex flex-col">
+                <x-label value="{{ __('Quantité') }}" />
+                @if($ar_unite2)
+                <p class="text-green-500 text-sm mt-1">{{ __('Par') }} {{ __($ar_unite2->unit_lib) }}</p>
+                @endif
+                <input type="text"
+                       class="block mt-1 rounded-md border-gray-300 w-full @error('ar_qte') border-red-500 bg-red-100 @enderror"
+                       wire:model.blur="ar_qte" 
+                       name="ar_qte">
+                @error('ar_qte')
+                    <div class="text-red-500 mt-1 text-sm">{{ $message }}</div>
+                @enderror
+            </div>
 
-        <!-- Prix achat unitaire -->
-        <div class="p-5 flex flex-col">
-            <x-label value="{{ __('Prix achat') }}" />
-            @if($ar_unite2)
-            <p class="text-green-500 text-sm mt-1">{{ __('Par') }} {{ __($ar_unite2->unit_lib) }}</p>
-            @endif
-            <input type="text"
-                   class="block mt-1 rounded-md border-gray-300 w-full bg-gray-100 @error('ar_prix_achat') border-red-500 bg-red-100 @enderror"
-                   wire:model.live="ar_prix_achat" 
-                   name="ar_prix_achat" 
-                   readonly>
-            @error('ar_prix_achat')
-                <div class="text-red-500 mt-1 text-sm">{{ $message }}</div>
-            @enderror
-        </div>
+            <!-- Quantité minimale -->
+            <div class="p-5 flex flex-col">
+                <x-label value="{{ __('Quantité minimale') }}" />
+                @if($ar_unite2)
+                <p class="text-green-500 text-sm mt-1">{{ __('Par') }} {{ __($ar_unite2->unit_lib) }}</p>
+                @endif
+                <input type="text"
+                       class="block mt-1 rounded-md border-gray-300 w-full @error('ar_qte_mini') border-red-500 bg-red-100 @enderror"
+                       wire:model="ar_qte_mini" 
+                       name="ar_qte_mini">
+                @error('ar_qte_mini')
+                    <div class="text-red-500 mt-1 text-sm">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <!-- Prix total achat -->
+            <div class="p-5 flex flex-col">
+                <x-label value="{{ __('Prix total achat') }}" />
+                <input type="text"
+                       class="block mt-1 rounded-md border-gray-300 w-full @error('ar_prix_achat_total') border-red-500 bg-red-100 @enderror"
+                       wire:model.live="ar_prix_achat_total" 
+                       name="ar_prix_achat_total">
+                @error('ar_prix_achat_total')
+                    <div class="text-red-500 mt-1 text-sm">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <!-- Prix achat unitaire -->
+            <div class="p-5 flex flex-col">
+                <x-label value="{{ __('Prix achat') }}" />
+                @if($ar_unite2)
+                <p class="text-green-500 text-sm mt-1">{{ __('Par') }} {{ __($ar_unite2->unit_lib) }}</p>
+                @endif
+                <input type="text"
+                       class="block mt-1 rounded-md border-gray-300 w-full bg-gray-100 @error('ar_prix_achat') border-red-500 bg-red-100 @enderror"
+                       wire:model.live="ar_prix_achat" 
+                       name="ar_prix_achat" 
+                       readonly>
+                @error('ar_prix_achat')
+                    <div class="text-red-500 mt-1 text-sm">{{ $message }}</div>
+                @enderror
+            </div>
+        @endif
 
         <!-- Prix de vente -->
         <div class="p-5 flex flex-col">
             <x-label value="{{ __('Prix de vente') }}" />
-            @if($ar_unite2)
+            @if($ar_unite2 && $gerer_stock)
             <p class="text-green-500 text-sm mt-1">{{ __('Par') }} {{ __($ar_unite2->unit_lib) }}</p>
             @endif
             <input type="text"

@@ -4,12 +4,6 @@
         {{-- Navigation des articles (Sans duplication de code !) --}}
         <div class="flex flex-wrap items-center {{ app()->getLocale() == 'ar' ? 'justify-end' : 'justify-start' }} gap-2 p-4 border-b">
             
-            @can('view article')
-                <x-nav-link-dashboard :route="route('articles.index')" :active="request()->routeIs('articles.index')">
-                    {{ __('Articles') }}
-                </x-nav-link-dashboard>
-            @endcan
-
             @can('view entree')
                 <x-nav-link-dashboard :route="route('entrees.index')" :active="request()->routeIs('entrees.index')">
                     {{ __('Entrées des Articles') }}

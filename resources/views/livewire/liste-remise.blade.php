@@ -3,7 +3,7 @@
         {{-- En-tête avec titre, recherche et bouton d'ajout --}}
         <div class="flex justify-between items-center mb-4">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Liste des ventes avec Remises') }}
+                {{ __('Liste des factures avec Remises') }}
             </h2>
             
             {{-- Barre de recherche --}}
@@ -18,7 +18,7 @@
             @can('create vente')
                 @include('partials.bouton_ajouter', [
                     'url' => route('ventes.create_g'),
-                    'texte' => __('Ajouter des ventes'),
+                    'texte' => __('Nouvelle facture'),
                     'couleur' => 'blue',
                     'icone' => true,
                 ])

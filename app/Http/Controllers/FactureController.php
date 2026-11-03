@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use PDF;
 use App\helpers;
 use App\Models\Unite;
 use App\Models\Vente;
@@ -14,6 +13,7 @@ use App\Models\Monnaie;
 use App\Models\Societe;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf as PDF;
 
 class FactureController extends Controller
 {
@@ -217,5 +217,42 @@ class FactureController extends Controller
     public function detailv(Facture $vente)
     {
         return view ('factures.detailv',compact('vente'));
+    }
+    public function printTicket($id)
+    {
+        $facture = Facture::findOrFail($id);
+        $items = Vente::where('facture_id', $id)->get()->toArray();
+        
+        $societe = \App\Models\Societe::first();
+        $client = \App\Models\Client::find($facture->fa_client);
+        
+        $data = [
+            'fa_num' => $facture->fa_num,
+            'fa_tot' => $facture->fa_tot,
+            'fa_t_remise' => $facture->fa_t_remise,
+            'fa_m_remise' => $facture->fa_m_remise,
+            'fa_tot_apres_remise' => $facture->fa_tot_apres_remise,
+            'fa_type_p' => \App\Models\Methode::find($facture->fa_type_p)->meth_nom ?? '',
+            'created_at' => $facture->created_at->format('d/m/Y H:i'),
+            'items' => $items,
+            'soc_nom' => $societe->soc_nom ?? '',
+            'soc_adresse' => $societe->soc_adresse ?? '',
+            'soc_tel' => $societe->soc_tel ?? '',
+            'cli_nom' => $client->cli_nom ?? null,
+        ];
+
+        // Configuration pour ticket 80mm
+        $config = [
+            'format' => [80, 150], // Largeur 80mm, hauteur max 150mm
+            'margin_left' => 2,
+            'margin_right' => 2,
+            'margin_top' => 2,
+            'margin_bottom' => 2,
+            'default_font_size' => 10,
+        ];
+
+        $pdf = PDF::loadView('pdf.ticket', $data, [], $config);
+        
+        return $pdf->stream('ticket-' . $facture->fa_num . '.pdf');
     }
 }

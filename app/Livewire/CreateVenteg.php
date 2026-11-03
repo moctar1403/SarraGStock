@@ -204,6 +204,7 @@ class CreateVenteg extends Component
         $fact->fa_num = $fact->id;
         $fact->fa_client = $this->client_id;
         $fact->fa_type_p = $this->paiement_id;
+        $fact->fa_origine = 'classique'; // <-- NOUVEAU
         $fact->fa_tot = $this->total_vente;
         $fact->fa_t_remise = $this->remise;
         $fact->fa_m_remise = $this->mremise;
