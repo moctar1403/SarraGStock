@@ -229,7 +229,6 @@ Route::middleware([
     Route::prefix('remboursements')->group(function () {
         Route::get('/',[RemboursementController::class,'index'])->name('remboursements.index');
         Route::post('/store-remboursement', [RemboursementController::class, 'store'])->name('remboursements.store');
-        Route::get('/create-remboursement', [RemboursementController::class, 'create'])->name('remboursements.create');
         Route::get('/edit-remboursement/{remboursement}', [RemboursementController::class, 'edit'])->name('remboursements.edit');
     });
     Route::prefix('fournisseurs')->group(function () {
