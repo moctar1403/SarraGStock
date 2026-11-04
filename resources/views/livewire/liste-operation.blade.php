@@ -5,6 +5,11 @@
             {{ __('Opérations sur méthodes de paiement') }}
         </x-nav-link-dashboard>
     @endcan
+    {{-- @can('view operations') --}}
+        <x-nav-link-dashboard :route="route('configs.categories')" :active="request()->routeIs('configs.categories')">
+            {{ __('Catégories d\'articles') }}
+        </x-nav-link-dashboard>
+    {{-- @endcan --}}
 
     @can('view paiements_clients')
         <x-nav-link-dashboard :route="route('paiements.index')" :active="request()->routeIs('paiements.index')">
@@ -21,6 +26,11 @@
     @can('view sauvegarde')
         <x-nav-link-dashboard :route="route('operation.sauvegarde_restauration')" :active="request()->routeIs('operation.sauvegarde_restauration')">
             {{ __('Base de données') }}
+        </x-nav-link-dashboard>
+    @endcan
+    @can('view statistiques')
+        <x-nav-link-dashboard :route="route('stats.index')" :active="request()->routeIs('stats.index')">
+            {{ __('Statistiques') }}
         </x-nav-link-dashboard>
     @endcan
 

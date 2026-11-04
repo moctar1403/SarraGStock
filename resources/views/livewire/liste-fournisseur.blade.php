@@ -31,7 +31,12 @@
                     'couleur' => 'blue',
                     'icone' => false,
                 ])
-                
+                @include('partials.bouton_ajouter', [
+                    'url' => route('fournisseurs.encaisse_index'),
+                    'texte' => __('Liste Encaissements'),
+                    'couleur' => 'blue',
+                    'icone' => false,
+                ])
                 @include('partials.bouton_ajouter', [
                     'url' => route('fournisseurs.pcreate'),
                     'texte' => __('Nouveau paiement Fournisseur'),
@@ -82,6 +87,25 @@
                                         {{-- Actions --}}
                                         <td class="text-sm font-medium text-center whitespace-nowrap">
                                             <div class="flex justify-center space-x-1 rtl:space-x-reverse">
+                                                <a href="{{ route('fournisseurs.details', $item->id) }}" 
+                                                   class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-xs inline-flex items-center" 
+                                                   title="{{ __('Voir l\'historique') }}">
+                                                    Historique
+                                                </a>
+                                                {{-- Bouton Payer (Décaissement) --}}
+                                                <a href="{{ route('fournisseurs.pcreate', ['fournisseur_id' => $item->id]) }}" 
+                                                   class="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded text-xs inline-flex items-center" 
+                                                   title="{{ __('Payer le fournisseur') }}">
+                                                    {{ __('Payer') }}
+                                                </a>
+
+                                                {{-- Bouton Encaisser (Récupération de crédit) --}}
+                                                <a href="{{ route('fournisseurs.encaisse', ['fournisseur_id' => $item->id]) }}" 
+                                                   class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-xs inline-flex items-center" 
+                                                   title="{{ __('Encaisser un crédit fournisseur') }}">
+                                                    {{ __('Encaisser') }}
+                                                </a>
+
                                                 @can('update fournisseur')
                                                     @include('partials.boutton_modifier', [
                                                         'url' => route('fournisseurs.edit', $item->id)

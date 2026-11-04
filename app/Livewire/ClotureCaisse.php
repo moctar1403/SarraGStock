@@ -61,8 +61,9 @@ class ClotureCaisse extends Component
             'statut' => 'ferme',
         ]);
 
-        session()->flash('success', 'Caisse clôturée avec succès. Écart : ' . format_number($this->ecart));
-        
+        // session()->flash('success',  __('Caisse clôturée avec succès. Écart : ')  . format_number($this->ecart));
+        // session()->flash('success', __('Caisse clôturée avec succès. Écart : :ecart', ['ecart' => format_number($this->ecart)]));
+        session()->flash('success', __('Caisse clôturée avec succès. Écart : :ecart', ['ecart' => number_format($this->ecart, 2)]));
         return redirect()->route('caisse.liste');
         // return redirect()->route('dashboard');
     }

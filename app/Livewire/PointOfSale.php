@@ -152,11 +152,11 @@ class PointOfSale extends Component
     public function validerVente()
     {
         if (empty($this->panier)) {
-            session()->flash('danger', 'Le panier est vide.');
+            session()->flash('danger',  __('Le panier est vide') );
             return;
         }
         if ($this->paiement_id == '0') {
-            session()->flash('danger', 'Veuillez sélectionner une méthode de paiement.');
+            session()->flash('danger', __('Veuillez sélectionner une méthode de paiement'));
             return;
         }
         if ($this->paiement_id == $this->meth_credit->id && $this->client_id == '0') {

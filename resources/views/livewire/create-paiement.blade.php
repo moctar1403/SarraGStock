@@ -34,14 +34,17 @@
         <div class="p-5 flex flex-col">
             <x-label value="{{ __('Montant') }}" />
             
-            @if ($this->current_client)
-                <p class="text-sm text-gray-600 mt-1">
-                    {{ __('Situation du client') }}: 
-                    <span class="text-green-500 font-semibold">
-                        {!! format_number($this->montant_actuel) !!}
-                    </span>
-                </p>
-            @endif
+                        @if ($this->current_client)
+                            <p class="text-sm text-gray-600 mt-1">
+                                {{ __('Situation du client') }} : 
+                                <span class="text-green-500 font-semibold">
+                                    {!! format_number($this->montant_actuel) !!}
+                                </span>
+                            </p>
+                            <p class="text-xs text-blue-500 mt-1">
+                                {{ __('Vous pouvez saisir un montant supérieur à la dette pour créer un crédit client.') }}
+                            </p>
+                        @endif
             
             <input type="text"
                    class="block mt-1 rounded-md border-gray-300 w-64 @error('pay_montant') border-red-500 bg-red-100 @enderror"

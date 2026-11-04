@@ -33,16 +33,44 @@ class RoleHasPermissionsSeeder extends Seeder
 
         // ============================================
         // admin : quasi super-admin
-        // (tout sauf "delete role" et "delete permission")
         // ============================================
-        $excludedFromAdmin = [
-            'delete role',
-            'delete permission',
-        ];
-
+        $excludedFromAdmin = ['delete role', 'delete permission'];
         foreach ($perms as $permName => $permId) {
             if (!in_array($permName, $excludedFromAdmin, true)) {
                 $rows[] = ['permission_id' => $permId, 'role_id' => $roles['admin']];
+            }
+        }
+
+        // ============================================
+        // Vendeur : Permissions exportées de la BDD
+        // ============================================
+        $vendeurPerms = [
+            'create category', 'view category', 'update category', 'delete category',
+            'create article', 'view article', 'update article', 'delete article',
+            'create vente', 'view vente', 'update vente', 'delete vente',
+            'create entree', 'view entree', 'update entree', 'delete entree',
+            'create sortie', 'view sortie', 'update sortie', 'delete sortie',
+            'create client', 'view client', 'update client', 'delete client',
+            'create fournisseur', 'view fournisseur', 'update fournisseur', 'delete fournisseur',
+            'create methode', 'view methode', 'update methode', 'delete methode',
+            'view dashboard', 'view dashboard3', 'view dashboard4', 'view dashboard5', 'view dashboard6',
+            'view articles', 'view tiers', 'view configurations', 'view statistiques', 'view operations',
+            'view societe', 'create societe', 'update societe', 'delete societe',
+            'sauvegarde', 'restauration',
+            'view facture', 'facture print', 'facture pdf', 'facture detail',
+            'view remise', 'view listedetails', 'create details',
+            'view inventaire', 'view paiement', 'view operations methodes',
+            'view monnaie', 'view unite', 'config stock',
+            'menu articles', 'menu tiers', 'menu configurations', 'menu statistiques', 'menu operations',
+            'create paiement', 'update monnaie', 'delete facture', 'delete paiement', 'delete pfournisseur',
+            'delete listedetails', 'delete darticle', 'create darticle',
+            'view stock', 'view stats_methodes', 'view paiements_clients', 'view paiements_fournisseurs',
+            'view sauvegarde', 'create backup', 'view restauration', 'view darticle', 'view detail',
+            'liste facture', 'menu ventes', 'delete methodes', 'view stats_ventes', 'view stats_articles',
+        ];
+        foreach ($vendeurPerms as $name) {
+            if (isset($perms[$name])) {
+                $rows[] = ['permission_id' => $perms[$name], 'role_id' => $roles['Vendeur']];
             }
         }
 
@@ -100,7 +128,7 @@ class RoleHasPermissionsSeeder extends Seeder
         }
 
         // ============================================
-        // Dédoublonnage (sécurité)
+        // Dédoublonnage
         // ============================================
         $unique = [];
         $seen = [];
@@ -113,7 +141,7 @@ class RoleHasPermissionsSeeder extends Seeder
         }
 
         // ============================================
-        // Insertion en masse
+        // Insertion
         // ============================================
         DB::table('role_has_permissions')->insert($unique);
 

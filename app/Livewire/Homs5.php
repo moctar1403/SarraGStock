@@ -28,7 +28,7 @@ class Homs5 extends Component
         }
         $this->date2=now()->format('Y-m-d');
     }
-    public function render()
+        public function render()
     {                                                                                         
         $ventes=Vente::where('id','>','0')
                         ->whereDate('updated_at','>=',$this->date1)
@@ -38,8 +38,10 @@ class Homs5 extends Component
                         ->orderByDesc('sum_qte')
                         ->take(10)
                         ->get();  
-        //  dd($ventes);                          
-        $articles_d_a=Article::where('id','>','0')->get();
+
+        // On ne récupère que les articles qui gèrent le stock
+        $articles_d_a = Article::where('gerer_stock', true)->get(); 
+        
          return view('livewire.homs5',compact('articles_d_a','ventes'));
     }
 }

@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
         DB::table('operats')->truncate();
         DB::table('transferts')->truncate();
         DB::table('ventes')->truncate();
+        DB::table('caisses')->truncate(); // <-- AJOUT
 
         // Tables mères niveau 1
         DB::table('factures')->truncate();
@@ -39,22 +40,25 @@ class DatabaseSeeder extends Seeder
         DB::table('clients')->truncate();
         DB::table('fournisseurs')->truncate();
         DB::table('articles')->truncate();
+        DB::table('categories')->truncate(); // <-- AJOUT
 
         // Table methodes (référentiel)
         DB::table('methodes')->truncate();
         DB::table('unites')->truncate();
         DB::table('sunites')->truncate();
+        
         // Auth (⚠️ les pivots d'abord !)
         DB::table('model_has_permissions')->truncate();
-        //DB::table('model_has_roles')->truncate();
-        //DB::table('role_has_permissions')->truncate();
+        DB::table('model_has_roles')->truncate();     // <-- DÉCOMMENTÉ
+        DB::table('role_has_permissions')->truncate(); // <-- DÉCOMMENTÉ
         DB::table('permissions')->truncate();
         DB::table('roles')->truncate();
         DB::table('users')->truncate();
         DB::table('sessions')->truncate();
-        //
+        
         Schema::enableForeignKeyConstraints();
-        // Appel du seeder dédié
+        
+        // Appel des seeders
         $this->call([
             // Auth
             PermissionsSeeder::class,
@@ -66,6 +70,7 @@ class DatabaseSeeder extends Seeder
             MonnaiesSeeder::class,
             UnitesSeeder::class,
             SunitesSeeder::class,
+            RestaurantSeeder::class, // <-- AJOUT
         ]);
     }
 }

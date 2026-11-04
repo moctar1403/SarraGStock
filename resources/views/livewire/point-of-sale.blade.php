@@ -70,7 +70,7 @@
                 </div>
             @empty
                 <div class="text-center text-gray-400 mt-10">
-                    <p>Le panier est vide</p>
+                    <p>{{ __('Le panier est vide') }}</p>
                 </div>
             @endforelse
         </div>

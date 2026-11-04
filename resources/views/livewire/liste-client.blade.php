@@ -15,7 +15,7 @@
             </div>
 
             {{-- Boutons d'action --}}
-            <div class="flex space-x-4 rtl:space-x-reverse">
+            <div class="flex space-x-2 rtl:space-x-reverse flex-wrap justify-end">
                 @can('create client')
                     @include('partials.bouton_ajouter', [
                         'url' => route('clients.create'),
@@ -28,6 +28,13 @@
                 @include('partials.bouton_ajouter', [
                     'url' => route('paiements.index'),
                     'texte' => __('Liste Paiements'),
+                    'couleur' => 'blue',
+                    'icone' => false,
+                ])
+
+                @include('partials.bouton_ajouter', [
+                    'url' => route('remboursements.index'),
+                    'texte' => __('Liste Remboursements'),
                     'couleur' => 'blue',
                     'icone' => false,
                 ])
@@ -78,6 +85,24 @@
                                         </td>
                                         <td class="text-sm font-medium text-center whitespace-nowrap">
                                             <div class="flex justify-center space-x-1 rtl:space-x-reverse">
+                                                <a href="{{ route('clients.details', $item->id) }}" 
+                                                    class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-xs inline-flex items-center" 
+                                                    title="{{ __('Voir l\'historique') }}">
+                                                     Historique
+                                                </a>
+                                                {{-- Bouton Payer --}}
+                                                <a href="{{ route('paiements.create', ['client_id' => $item->id]) }}" 
+                                                   class="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded text-xs inline-flex items-center" 
+                                                   title="{{ __('Encaisser un paiement') }}">
+                                                    {{ __('Payer') }}
+                                                </a>
+                                                {{-- Bouton Rembourser --}}
+                                                <a href="{{ route('remboursements.create', ['client_id' => $item->id]) }}" 
+                                                   class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs inline-flex items-center" 
+                                                   title="{{ __('Rembourser le client') }}">
+                                                    {{ __('Rembourser') }}
+                                                </a>
+
                                                 @can('update client')
                                                     @include('partials.boutton_modifier', [
                                                         'url' => route('clients.edit', $item->id)

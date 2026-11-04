@@ -21,25 +21,24 @@ class CreatePaiement extends Component
     public $pay_montant;
     public $pay_date;
     public $recherche_client;
-    
 
     public function rules()
     {
         $rules = [];
         $rules["client_id"] = 'required|min:1';
-        $rules["pay_montant"] = "required|numeric|min:1|lte:$this->montant_actuel";
+        $rules["pay_montant"] = "required|numeric|min:1"; 
         $rules["pay_type_p"] = 'required';
         $rules["pay_date"] = 'required|date';
         return $rules;
     }
+
     public function messages(): array
     {
         return[
              'client_id.required' => __("Séléctionner un client"),
-             'pay_montant.lte' => __("doit être inf ou égal au montant de la situation du client"),
-             
         ];
     }
+
     public function store(Payement $paiement)
     {
         $this->validate();
@@ -88,7 +87,6 @@ class CreatePaiement extends Component
 
         return redirect()->route('paiements.index')->with('success', __('Le paiement est enregistré'));
     } catch (Exception $e) {
-        //Sera pris en compte si on a un problème
         return redirect()->route('paiements.index')->with('danger', 'Un problème est rencontré');
         }
     }
@@ -104,8 +102,8 @@ class CreatePaiement extends Component
             $this->client_id=$this->recherche_client;
         }
          ///////////
-         $this->current_client=Client::where('cli_situation','>','0')
-                                        ->where('id',$this->client_id)
+         // On retire le where('cli_situation','>','0') pour pouvoir chercher n'importe quel client
+         $this->current_client=Client::where('id',$this->client_id)
                                         ->orWhere('cli_tel',$this->client_id)
                                         ->orWhere('cli_email',$this->client_id)
                                         ->first();
@@ -117,10 +115,12 @@ class CreatePaiement extends Component
         $this->current_methode=Methode::where('id',$this->pay_type_p)->first();
         //selectionner la méthode credit
         $this->credit_methode=Methode::where('meth_nom','like','credit')->first();
+        
+        // On affiche TOUS les clients (sauf l'ID 0) pour permettre les acomptes
         $clientsList=Client::where('id','!=','0')
-                            ->where('cli_situation','>','0')
                             ->orderBy('id')
                             ->get();
+                            
         $methodesList=Methode::where('meth_active','>','0')
                                 ->where('meth_nom','not like','credit')
                                 ->get();                   

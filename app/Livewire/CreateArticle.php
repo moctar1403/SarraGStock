@@ -101,7 +101,7 @@ class CreateArticle extends Component
                 $article->ar_prix_achat = $this->ar_prix_achat;
             } else {
                 // Si on ne gère pas le stock, on met 9999 par défaut
-                $article->ar_qte = 999999;
+                $article->ar_qte = 0;
                 $article->ar_qte_mini = 0;
                 $article->ar_prix_achat = 0;
             }

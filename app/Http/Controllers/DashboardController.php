@@ -19,7 +19,7 @@ class DashboardController extends Controller
     {
         //trace
         $data="page dashboard";
-        $model="App\Models\Homs3";
+        $model="App\Models\Homs4";
         trace($data,$model);
         $permissns=Permission::select('name')->get();
         //get currant user
@@ -42,7 +42,7 @@ class DashboardController extends Controller
                 }
             }
             if ($counter>0) {
-                return view('dashboard3');
+                return view('dashboard4');
             }
             return view('dashboard');
         }

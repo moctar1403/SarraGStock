@@ -59,13 +59,17 @@
                                             <span class="number-cell">{!! format_number($item->ar_qte_mini) !!}</span>
                                         </td>
                                         
-                                        {{-- Quantité avec couleur conditionnelle --}}
+                                        {{-- Quantité avec couleur conditionnelle et vérification du stock --}}
                                         @php
                                             $qteColor = ($item->ar_qte >= $item->ar_qte_mini) ? 'text-green-500' : 'text-red-500';
                                             $qteValue = ($item->ar_unite == 1) ? (int)$item->ar_qte : $item->ar_qte;
                                         @endphp
                                         <td class="text-sm font-medium {{ $qteColor }} px-2 py-2">
-                                            <span class="number-cell">{!! format_number($qteValue) !!}</span>
+                                            @if($item->gerer_stock)
+                                                <span class="number-cell">{!! format_number($qteValue) !!}</span>
+                                            @else
+                                                <span class="text-gray-400">-</span>
+                                            @endif
                                         </td>
                                         
                                         <td class="text-sm font-medium text-gray-900 px-2 py-2">{{ __($item->unit_lib) }}</td>

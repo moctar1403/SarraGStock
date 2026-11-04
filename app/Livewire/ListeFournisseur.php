@@ -23,32 +23,31 @@ class ListeFournisseur extends Component
     {
         $fournisseur = Fournisseur::where('id', '=', $this->deleteId)->first();
         
+        if (!$fournisseur) {
+            return redirect()->route('fournisseurs.index')->with('danger', __("Fournisseur introuvable."));
+        }
+
         // 1. Vérification s'il y a une entrée en stock pour le fournisseur 
         $entree = Entrstock::where('ent_fournisseur', $fournisseur->id)->first();
         if ($entree) {
-            session()->flash('danger', __("Fournisseur n'est pas supprimé, car il a une entrée en stock"));
-            return redirect()->route('fournisseurs.index');
+            return redirect()->route('fournisseurs.index')->with('danger', __("Fournisseur n'est pas supprimé, car il a une entrée en stock"));
         }
 
-        // 2. Vérification s'il y a un paiement pour le fournisseur
+        // 2. Vérification s'il y a un paiement ou un encaissement (même table)
         $paiement = Payfournisseur::where('fournisseur_id', $fournisseur->id)->first();
         if ($paiement) {
-            session()->flash('danger', __("Fournisseur n'est pas supprimé, car il a un historique de paiement"));
-            return redirect()->route('fournisseurs.index');
+            return redirect()->route('fournisseurs.index')->with('danger', __("Fournisseur n'est pas supprimé, car il a un historique de paiement ou d'encaissement"));
         }
 
         // Si tout est bon, on supprime
         $fournisseur->delete();
         
         // Tracing
-        $data = "Suppression du fournisseur id " . $fournisseur->id . " nom " . $fournisseur->four_nom . " ";
+        $data = "Suppression du fournisseur id " . $fournisseur->id . " nom " . $fournisseur->four_nom;
         $model = "App\Models\Fournisseur";
         trace($data, $model);
         
-        // Message de succès
-        session()->flash('success', __('Fournisseur supprimé avec succès'));
-        
-        return redirect()->route('fournisseurs.index');
+        return redirect()->route('fournisseurs.index')->with('success', __('Fournisseur supprimé'));
     }
 
     public function render()
@@ -63,8 +62,7 @@ class ListeFournisseur extends Component
                             ->orWhere('four_saisi_par', 'like', '%' . $this->search . '%')
                             ->orderByDesc('four_situation')
                             ->paginate(10);
-        }
-        else {
+        } else {
             $fournisseurs = Fournisseur::where('id', '>', 0)
                             ->orderByDesc('four_situation')
                             ->paginate(10);

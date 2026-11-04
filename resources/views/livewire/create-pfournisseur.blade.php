@@ -41,6 +41,9 @@
                         {!! format_number($this->montant_actuel) !!}
                     </span>
                 </p>
+                <p class="text-xs text-blue-500 mt-1">
+                    {{ __('Vous pouvez saisir un montant supérieur à la dette pour créer un crédit fournisseur.') }}
+                </p>
             @endif
             
             <input type="text"
@@ -94,7 +97,7 @@
 
         <!-- Boutons d'action -->
         <div class="p-5 flex justify-between items-center bg-gray-100 rounded-b-lg">
-            <a href="{{ route('paiements.index') }}" 
+            <a href="{{ route('fournisseurs.pindex') }}" 
                class="bg-red-600 hover:bg-red-700 rounded-md px-4 py-2 text-sm text-white transition">
                 {{ __('Annuler') }}
             </a>

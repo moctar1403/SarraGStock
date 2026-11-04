@@ -28,7 +28,8 @@ class CreatePfournisseur extends Component
     {
         $rules = [];
         $rules["fournisseur_id"] = 'required|min:1';
-        $rules["fpay_montant"] = "required|numeric|min:1|lte:$this->montant_actuel";
+        // ON RETIRE 'lte:$this->montant_actuel' ICI
+        $rules["fpay_montant"] = "required|numeric|min:1";
         $rules["fpay_frais"] = "required|numeric|lte:$this->fpay_montant";
         $rules["fpay_type_p"] = 'required';
         $rules["fpay_date"] = 'required|date';
@@ -38,7 +39,7 @@ class CreatePfournisseur extends Component
     {
         return[
              'fournisseur_id.required' => __("Séléctionner un fournisseur"),
-             'fpay_montant.lte' => __("doit être inf ou égal au montant de la situation du fournisseur"),
+             // ON RETIRE LE MESSAGE D'ERREUR LTE
         ];
     }
     public function select_fournisseur(){
@@ -52,6 +53,7 @@ class CreatePfournisseur extends Component
         try {
             //ajout du paiement
             $paiement->fournisseur_id=$this->current_fournisseur->id;
+            $paiement->type_operation = 'paiement';
             $paiement->fpay_montant=$this->fpay_montant;
             $paiement->fpay_frais=$this->fpay_frais;
             $paiement->fpay_type_p=$this->fpay_type_p;
@@ -68,9 +70,7 @@ class CreatePfournisseur extends Component
             //actualisation du solde réel de la méthode
             $this->current_methode->meth_solder-=$this->montant_total;
             $this->current_methode->save();
-            //actualisation du solde réel de la méthode credit
-            // $this->credit_methode->meth_solder-=(float)$this->fpay_montant;
-            // $this->credit_methode->save();
+            
             //actualisation de la table operats
             //la méthode de paiement
             $operat1=Operat::create([
@@ -82,16 +82,6 @@ class CreatePfournisseur extends Component
                 'operat_montant'=>($this->montant_total)*-1,
             ]);
             $operat1->save();
-            //actualisation de la table operats
-            //la méthode credit
-            // $operat2=Operat::create([
-            //     'operat_meth_id'=>$this->credit_methode->id,
-            //     'operat_vent_id'=>'0',
-            //     'operat_tr_id'=>'0',
-            //     'operat_pa_id'=>$paiement->id,
-            //     'operat_montant'=>($paiement->fpay_montant)*-1,
-            // ]);
-            // $operat2->save();
 
         return redirect()->route('fournisseurs.pindex')->with('success', __('Le paiement est enregistré'));
     } catch (Exception $e) {
@@ -109,6 +99,7 @@ class CreatePfournisseur extends Component
             $this->fournisseur_id=$this->recherche_fournisseur;
         }
         ///////////
+        // On retire le where('four_situation','>','0') pour pouvoir chercher n'importe quel fournisseur
         $this->current_fournisseur=Fournisseur::where('id',$this->fournisseur_id)
                                         ->orWhere('four_tel',$this->fournisseur_id)
                                         ->orWhere('four_email',$this->fournisseur_id)
@@ -121,10 +112,12 @@ class CreatePfournisseur extends Component
         $this->current_methode=Methode::where('id',$this->fpay_type_p)->first();
         //selectionner la méthode credit
         $this->credit_methode=Methode::where('meth_nom','like','credit')->first();
+        
+        // On affiche TOUS les fournisseurs (sauf l'ID 0)
         $fournisseursList=Fournisseur::where('id','!=','0')
-                            ->where('four_situation','>','0')
                             ->orderBy('id')
                             ->get();
+                            
         $methodesList=Methode::where('meth_active','>','0')
                                 ->where('meth_nom','not like','credit')
                                 ->get();                   

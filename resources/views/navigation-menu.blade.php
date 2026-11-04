@@ -43,8 +43,13 @@
                     </x-nav-link>
 
                     @can('menu articles')
-                        <x-nav-link href="{{ route('articles.index') }}" :active="request()->routeIs('articles.*')" class="bg-cyan-500 rounded-md px-3 py-1 text-white hover:bg-cyan-600 transition mx-1">
+                        <x-nav-link href="{{ route('articles.index') }}" :active="request()->routeIs('articles.index')" class="bg-cyan-500 rounded-md px-3 py-1 text-white hover:bg-cyan-600 transition mx-1">
                             {{ __('Articles') }}
+                        </x-nav-link>
+                    @endcan
+                    @can('menu articles')
+                        <x-nav-link href="{{ route('articles.index0') }}" :active="request()->routeIs('articles.index0')" class="bg-cyan-500 rounded-md px-3 py-1 text-white hover:bg-cyan-600 transition mx-1">
+                            {{ __('Stock') }}
                         </x-nav-link>
                     @endcan
 
@@ -53,18 +58,18 @@
                             {{ __('Tiers') }}
                         </x-nav-link>
                     @endcan
-
+                    
                     @can('menu configurations')
                         <x-nav-link href="{{ route('configs.index') }}" :active="request()->routeIs('configs.*')" class="bg-cyan-500 rounded-md px-3 py-1 text-white hover:bg-cyan-600 transition mx-1">
                             {{ __('Configurations') }}
                         </x-nav-link>
                     @endcan
 
-                    @can('menu statistiques')
+                    {{-- @can('menu statistiques')
                         <x-nav-link href="{{ route('stats.index') }}" :active="request()->routeIs('stats.*')" class="bg-cyan-500 rounded-md px-3 py-1 text-white hover:bg-cyan-600 transition mx-1">
                             {{ __('Statistiques') }}
                         </x-nav-link>
-                    @endcan
+                    @endcan --}}
 
                     @can('menu operations')
                         <x-nav-link href="{{ route('operation.index') }}" :active="request()->routeIs('operation.*')" class="bg-cyan-500 rounded-md px-3 py-1 text-white hover:bg-cyan-600 transition mx-1">
