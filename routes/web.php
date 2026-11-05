@@ -284,6 +284,10 @@ Route::middleware([
             'tresorerie-fournisseurs' => $folder . 'modules/tresorerie-fournisseurs.md',
             'methodes-paiement' => $folder . 'modules/methodes-paiement.md',
             'admin_guide' => $folder . 'ADMIN_GUIDE.md',
+            'resto-pos' => $folder . 'modules/resto-pos.md',
+            'remboursements' => $folder . 'modules/remboursements.md',
+            'journal-mouvements' => $folder . 'modules/journal-mouvements.md',
+            // 'journal-mouvements' => base_path('docs/modules/journal-mouvements.md'),
         ];
 
         if (!array_key_exists($page, $allowedPages)) {

@@ -54,7 +54,7 @@ class PermissionsSeeder extends Seeder
             // Factures
             'view facture', 'facture print', 'facture pdf', 'facture detail',
             // Remises / détails
-            'view remise', 'view listedetails', 'create details',
+            'view remise', 'view listedetails', 'create details', 'create remise',
             // Inventaire / paiements
             'view inventaire', 'view paiement', 'view operations methodes',
             // Monnaies / unités / traces

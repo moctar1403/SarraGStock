@@ -13,6 +13,7 @@
 - [إدارة المواد (الكتالوج)](/documentation/articles)
 - [جرد المواد](/documentation/inventaire)
 - [إخراج المواد (الفاقد، التلف)](/documentation/sorties)
+- [سجل حركات المخزون](/documentation/journal-mouvements)
 
 ### 🤝 إدارة الأطراف (العملاء والموردين)
 - [العملاء والموردون](/documentation/tiers)
@@ -20,10 +21,12 @@
 ### 🛒 المبيعات والمشتريات
 - [تسجيل عملية بيع (الفوترة)](/documentation/ventes)
 - [إدارة المشتريات (إدخالات المخزون)](/documentation/achats)
+- [وحدة المطعم (الصندوق ونقطة البيع)](/documentation/resto-pos)
 
 ### 💰 الخزينة (المدفوعات)
 - [مدفوعات العملاء](/documentation/tresorerie-clients)
 - [مدفوعات الموردين](/documentation/tresorerie-fournisseurs)
+- [المبالغ المستردة والتحصيلات](/documentation/remboursements)
 
 ### ⚙️ التكوين
 - [طرق الدفع](/documentation/methodes-paiement)

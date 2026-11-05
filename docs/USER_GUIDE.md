@@ -13,6 +13,7 @@ Pour faciliter la navigation, ce guide est découpé par modules. Cliquez sur un
 - [Gestion des Articles (Catalogue)](/documentation/articles)
 - [Inventaire des Articles](/documentation/inventaire)
 - [Sorties des Articles (Pertes, Casses)](/documentation/sorties)
+- [Journal des Mouvements](/documentation/journal-mouvements)
 
 ### 🤝 Gestion des Tiers
 - [Clients et Fournisseurs](/documentation/tiers)
@@ -20,10 +21,12 @@ Pour faciliter la navigation, ce guide est découpé par modules. Cliquez sur un
 ### 🛒 Ventes et Achats
 - [Enregistrer une Vente (Facturation)](/documentation/ventes)
 - [Gérer les Achats (Entrées en stock)](/documentation/achats)
+- [Module Restaurant (Caisse & POS)](/documentation/resto-pos)
 
 ### 💰 Trésorerie (Paiements)
 - [Paiements Clients](/documentation/tresorerie-clients)
 - [Paiements Fournisseurs](/documentation/tresorerie-fournisseurs)
+- [Remboursements et Encaissements](/documentation/remboursements)
 
 ### ⚙️ Configuration
 - [Méthodes de Paiement](/documentation/methodes-paiement)
