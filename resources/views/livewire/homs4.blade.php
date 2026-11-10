@@ -2,13 +2,14 @@
     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
         {{-- Filtres de recherche --}}
         <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
-            {{-- Origine --}}
+            {{-- Filtre Origine --}}
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Origine') }}</label>
                 <select class="block w-full rounded-md border-gray-300" wire:model.live="search_origine">
                     <option value="">{{ __('Toutes') }}</option>
                     <option value="classique">{{ __('Classique') }}</option>
                     <option value="resto">{{ __('Restaurant') }}</option>
+                    <option value="mixte">{{ __('Mixte') }}</option> <!-- NOUVEAU -->
                 </select>
             </div>
 
@@ -46,7 +47,7 @@
                             <thead class="border-b bg-gray-50">
                                 <tr style="vertical-align:middle">
                                     <th class="text-sm font-medium text-gray-900 px-2 py-2">{{ __('Date') }}</th>
-                                    <th class="text-sm font-medium text-gray-900 px-2 py-2">{{ __('Origine') }}</th> <!-- NOUVELLE COLONNE -->
+                                    <th class="text-sm font-medium text-gray-900 px-2 py-2">{{ __('Origine') }}</th>
                                     <th class="text-sm font-medium text-gray-900 px-2 py-2">{{ __('Client') }}</th>
                                     <th class="text-sm font-medium text-gray-900 px-2 py-2">{{ __('Prix Total') }}</th>
                                     <th class="text-sm font-medium text-gray-900 px-2 py-2">{{ __('Mode de Paiement') }}</th>
@@ -57,13 +58,18 @@
                                 @forelse ($factures as $item)
                                     <tr class="border-b-2 border-gray-100 hover:bg-gray-50" style="vertical-align:middle">
                                         <td class="text-sm font-medium text-gray-900 px-2 py-2">{{ $item->updated_at->format('d/m/Y') }}</td>
+                                        
+                                        {{-- Badge d'origine --}}
                                         <td class="text-sm font-medium px-2 py-2">
                                             @if($item->fa_origine === 'resto')
                                                 <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs">Resto</span>
+                                            @elseif($item->fa_origine === 'mixte')
+                                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs">Mixte</span>
                                             @else
                                                 <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">Classique</span>
                                             @endif
                                         </td>
+
                                         <td class="text-sm font-medium text-gray-900 px-2 py-2">{{ $item->cli_nom ?? 'Anonyme' }}</td>
                                         <td class="text-sm font-medium text-green-600 px-2 py-2">
                                             <span class="number-cell">{!! format_number($item->fa_tot_apres_remise) !!}</span>
@@ -96,6 +102,7 @@
                             </tbody>
                         </table>
 
+                        {{-- Pagination --}}
                         <div class="mt-3">
                             {{ $factures->links() }}
                         </div>

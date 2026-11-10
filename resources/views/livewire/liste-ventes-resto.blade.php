@@ -2,26 +2,23 @@
     <div class="mt-5">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
             
-            {{-- En-tête avec titre, boutons et filtres --}}
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
-                
-                {{-- Titre et Boutons --}}
+            {{-- En-tête avec titre et filtres --}}
+            <div class="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
                 <div class="flex flex-col md:flex-row items-start md:items-center gap-4">
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                         {{ __('Ventes du Restaurant') }}
                     </h2>
                     
                     <div class="flex space-x-2">
-                        <a href="{{ route('pos.index') }}" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm shadow">
+                        <a href="{{ route('pos.index') }}" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm shadow font-bold transition">
                             {{ __('Continuer les ventes (POS)') }}
                         </a>
-                        <a href="{{ route('caisse.liste') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm shadow">
+                        <a href="{{ route('caisse.liste') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm shadow font-bold transition">
                             {{ __('Historique des Caisses') }}
                         </a>
                     </div>
                 </div>
-
-                {{-- Filtres de recherche et de date --}}
+                
                 <div class="flex flex-wrap items-center gap-2 w-full md:w-auto md:justify-end">
                     <input type="text" 
                            class="rounded-md border-gray-300 w-full md:w-64" 
@@ -72,6 +69,13 @@
                                             </td>
                                             <td class="text-sm font-medium text-gray-900 px-2 py-2">
                                                 #{{ $item->fa_num }}
+                                                
+                                                {{-- NOUVEAU : Badge Mixte --}}
+                                                @if($item->fa_origine === 'mixte')
+                                                    <span class="ml-1 px-2 py-0.5 bg-purple-100 text-purple-800 rounded text-xs font-bold" title="{{ __('Cette vente contient des plats et des articles de stock') }}">
+                                                        Mixte
+                                                    </span>
+                                                @endif
                                             </td>
                                             <td class="text-sm font-medium text-gray-900 px-2 py-2">
                                                 {{ $item->caissier ?? '-' }}

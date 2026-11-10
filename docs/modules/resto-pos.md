@@ -1,8 +1,8 @@
-# Module Restaurant : Caisse et Point of Sale (POS)
+# Module Caisse et Point of Sale (POS)
 
 [⬅ Retour au sommaire](/documentation/user_guide)
 
-Ce module est spécialement conçu pour la gestion d'un restaurant ou d'un point de vente rapide. Il permet de prendre des commandes sur un écran tactile et de gérer la caisse (ouverture, clôture).
+Ce module est spécialement conçu pour la gestion d'un point de vente. Il permet de prendre des commandes sur un écran tactile, de gérer la caisse (ouverture, clôture) et de vendre aussi bien des plats préparés que des articles en stock.
 
 ---
 
@@ -21,15 +21,26 @@ Avant de pouvoir vendre, vous devez ouvrir une session de caisse.
 
 ## 2. Utiliser l'écran tactile (POS)
 
-L'écran POS (Point of Sale) est divisé en deux parties : le menu à gauche et le ticket de caisse à droite.
+L'écran POS est divisé en deux parties : le catalogue à gauche et le ticket de caisse à droite.
 
-1. **Ajouter des articles** : Cliquez sur les boutons des plats ou boissons. Ils s'ajoutent automatiquement au ticket de droite.
-2. **Gérer le ticket** : Vous pouvez cliquer sur le bouton "-" pour retirer une unité d'un article.
-3. **Sélectionner la méthode de paiement** : Choisissez Espèces, Bankily, etc.
-4. **Remise (Optionnel)** : Cliquez sur "+ Accorder une remise" pour appliquer un pourcentage ou un montant fixe.
-5. **Valider** : Cliquez sur le bouton vert **VALIDER LA VENTE** pour enregistrer la commande.
+### A. Basculer entre les modes de vente
+En haut de l'écran, vous avez deux boutons :
+- **🍽️ Restaurant** : Affiche uniquement les plats et boissons préparés (qui ne gèrent pas de stock).
+- **📦 Articles de Stock** : Affiche les articles classiques avec leur quantité disponible.
 
-*Note : Une fois la vente validée, vous êtes redirigé vers l'historique des ventes resto. Vous pouvez y imprimer le ticket.*
+*Vous pouvez mélanger les deux types d'articles dans un même ticket. La vente sera alors enregistrée comme **"Mixte"**.*
+
+### B. Recherche rapide (Code-barres)
+Dans la barre de recherche, vous pouvez scanner un code-barres, taper une référence ou un ID.
+- La liste se filtrera automatiquement pour afficher l'article trouvé.
+- Cliquez sur l'article pour l'ajouter au panier.
+- Effacez le champ (ou cliquez sur la croix) pour revenir à la liste complète.
+
+### C. Gérer le ticket
+1. **Ajouter des articles** : Cliquez sur les boutons du catalogue.
+2. **Modifier la quantité** : Utilisez le bouton "-" dans le panier pour retirer une unité.
+3. **Appliquer une remise** : Cliquez sur "+ Accorder une remise" pour choisir un pourcentage ou un montant fixe.
+4. **Valider** : Choisissez la méthode de paiement, puis cliquez sur **VALIDER LA VENTE**.
 
 ---
 
@@ -37,7 +48,7 @@ L'écran POS (Point of Sale) est divisé en deux parties : le menu à gauche et 
 
 À la fin de la journée, vous devez fermer la caisse pour vérifier les comptes.
 
-1. Depuis l'écran POS ou l'historique, cliquez sur **Fermer la caisse (Rapport Z)**.
+1. Depuis l'écran POS ou l'historique, cliquez sur **Clôturer**.
 2. L'écran affiche le **Total théorique** (Fond de caisse + Ventes de la journée).
 3. Comptez l'argent réellement présent dans votre tiroir-caisse et saisissez le montant dans **Montant réel compté**.
 4. L'application calcule automatiquement l'**Écart** (Manquant ou Excédent).

@@ -20,19 +20,19 @@ use Livewire\Component;
 class PointOfSale extends Component
 {
     public $caisse;
-    
-    // Panier du POS
     public $panier = []; 
-    
-    // Informations de vente
+    public $type_vente = 'resto'; 
+    public $code_barre = ''; 
+
     public $paiement_id = '0';
     public $client_id = '0';
-    public $recherche_client = '';
     public $client;
     public $meth_credit = '';
     public $type_paiement;
 
-    // Totaux et Remise
+    // NOUVEAU : Pour la recherche rapide du client
+    public $recherche_client = '';
+
     public $total_vente = 0;
     public $compteur_remise = 0;
     public $remise = 0;
@@ -43,17 +43,70 @@ class PointOfSale extends Component
 
     public function mount()
     {
-        // Vérifier la caisse
         $this->caisse = Caisse::where('user_id', Auth::id())->where('statut', 'ouvert')->first();
         if (!$this->caisse) {
             return redirect()->route('caisse.ouvrir');
         }
-
-        // Initialisation remise
         $this->meth_credit = Methode::where('meth_nom', 'like', '%credit%')->first();
     }
 
-    // ==================== GESTION DU PANIER ====================
+    // NOUVEAU : Recherche du client
+    public function updateClientBySearch()
+    {
+        if (empty($this->recherche_client)) {
+            return;
+        }
+
+        $client = Client::where('cli_tel', $this->recherche_client)
+            ->orWhere('cli_email', $this->recherche_client)
+            ->first();
+
+        if ($client) {
+            $this->client_id = $client->id;
+            $this->client = $client;
+        } else {
+            $this->client_id = '0';
+            $this->client = null;
+        }
+    }
+
+    // NOUVEAU : Déclenché quand on tape dans le champ de recherche
+    public function updatedRechercheClient()
+    {
+        $this->updateClientBySearch();
+    }
+
+    // ... Le reste de vos méthodes (searchArticleByCode, addToCart, etc.) reste inchangé ...
+
+    public function searchArticleByCode()
+    {
+        if (empty($this->code_barre)) {
+            return;
+        }
+
+        $article = Article::where('ar_codebarre', $this->code_barre)
+            ->orWhere('ar_reference', $this->code_barre)
+            ->orWhere('id', $this->code_barre)
+            ->first();
+
+        if ($article) {
+            if ($this->type_vente === 'resto' && $article->gerer_stock) {
+                session()->flash('danger', __('Cet article est un article de stock, changez de mode.'));
+                return;
+            }
+            if ($this->type_vente === 'stock' && !$article->gerer_stock) {
+                session()->flash('danger', __('Cet article est un plat, changez de mode.'));
+                return;
+            }
+
+            $this->addToCart($article->id);
+            $this->code_barre = '';
+        } else {
+            session()->flash('danger', __('Article introuvable.'));
+            $this->code_barre = '';
+        }
+    }
+
     public function addToCart($articleId)
     {
         $article = Article::find($articleId);
@@ -89,7 +142,6 @@ class PointOfSale extends Component
         $this->calculerTotaux();
     }
 
-    // ==================== CALCULS ====================
     public function calculerTotaux()
     {
         $this->total_vente = 0;
@@ -122,62 +174,58 @@ class PointOfSale extends Component
         }
     }
 
-    public function clickRemise1()
-    {
-        $this->compteur_remise = 1;
-    }
+    public function clickRemise1() { $this->compteur_remise = 1; }
+    public function clickRemise2() { $this->compteur_remise = 0; $this->remise = 0; $this->remise2 = 0; }
+    
+    public function updatedRemise() { $this->calculerRemise(); }
+    public function updatedRemise2() { $this->calculerRemise(); }
 
-    public function clickRemise2()
-    {
-        $this->compteur_remise = 0;
-        $this->remise = 0;
-        $this->remise2 = 0;
-    }
-
-    public function updateClientBySearch()
-    {
-        if (empty($this->recherche_client)) return;
-
-        $client = Client::where('cli_tel', $this->recherche_client)
-            ->orWhere('cli_email', $this->recherche_client)
-            ->first();
-
-        if ($client) {
-            $this->client_id = $client->id;
-            $this->client = $client;
-        }
-    }
-
-    // ==================== VALIDATION ====================
     public function validerVente()
     {
         if (empty($this->panier)) {
-            session()->flash('danger',  __('Le panier est vide') );
+            session()->flash('danger', __('Le panier est vide.'));
             return;
         }
         if ($this->paiement_id == '0') {
-            session()->flash('danger', __('Veuillez sélectionner une méthode de paiement'));
+            session()->flash('danger', __('Veuillez sélectionner une méthode de paiement.'));
             return;
         }
         if ($this->paiement_id == $this->meth_credit->id && $this->client_id == '0') {
-            session()->flash('danger', 'Le client est obligatoire pour une vente à crédit.');
+            session()->flash('danger', __('Le client est obligatoire pour une vente à crédit.'));
             return;
         }
 
         try {
-            // 1. Créer la facture AVEC l'origine 'resto'
+            $hasResto = false;
+            $hasStock = false;
+
+            foreach ($this->panier as $item) {
+                $article = Article::find($item['id']);
+                if ($article->gerer_stock) {
+                    $hasStock = true;
+                } else {
+                    $hasResto = true;
+                }
+            }
+
+            if ($hasResto && $hasStock) {
+                $origine = 'mixte';
+            } elseif ($hasStock) {
+                $origine = 'classique';
+            } else {
+                $origine = 'resto';
+            }
+
             $facture = Facture::create([
-                'fa_num' => 'TEMP', // Sera mis à jour avec l'ID
+                'fa_num' => 'TEMP',
                 'fa_client' => $this->client_id,
                 'fa_type_p' => $this->paiement_id,
-                'fa_origine' => 'resto', // <-- DISTINCTION ICI
+                'fa_origine' => $origine,
                 'fa_tot' => $this->total_vente,
                 'fa_t_remise' => $this->remise,
                 'fa_m_remise' => $this->mremise,
                 'fa_tot_apres_remise' => $this->total_vente_apres_remise,
             ]);
-            
-            // Mettre à jour le numéro avec l'ID réel
             $facture->update(['fa_num' => $facture->id]);
 
             foreach ($this->panier as $item) {
@@ -193,13 +241,11 @@ class PointOfSale extends Component
                     've_saisi_par' => Auth::id(),
                 ]);
 
-                // Gestion du stock
                 $article = Article::find($item['id']);
                 if ($article->gerer_stock) {
                     $article->decrement('ar_qte', $item['quantite']);
                 }
 
-                // Mouvement de stock
                 Sortstock::create([
                     'article_id' => $vnt->article_id,
                     'sor_vente' => $vnt->id,
@@ -210,21 +256,16 @@ class PointOfSale extends Component
                     'sor_montant_t_vente' => $vnt->ve_quantite * $vnt->ve_prix_vente,
                     'sor_date' => now(),
                     'sor_motif' => 'vente',
-                    'sor_observations' => 'vente resto',
+                    'sor_observations' => 'vente ' . $origine,
                     'sor_saisi_par' => Auth::id(),
                 ]);
-
-                $data = "enregistrement de la vente id " . $vnt->id;
-                trace($data, "App\Models\Vente");
             }
 
-            // Mise à jour méthode de paiement
             $methode = Methode::find($this->paiement_id);
             $methode->meth_solder += $this->total_vente_apres_remise;
             $methode->meth_soldev += $this->total_vente_apres_remise;
             $methode->save();
 
-            // Opération
             Operat::create([
                 'operat_meth_id' => $this->paiement_id,
                 'operat_vent_id' => $vnt->id,
@@ -232,7 +273,6 @@ class PointOfSale extends Component
                 'operat_montant' => $facture->fa_tot_apres_remise,
             ]);
 
-            // Remise
             if ($this->compteur_remise > 0) {
                 $remise = new Remise();
                 $remise->facture_id = $facture->id;
@@ -243,52 +283,81 @@ class PointOfSale extends Component
                 $remise->save();
             }
 
-            // Client crédit
             if ($this->client_id != 0 && $this->paiement_id == $this->meth_credit->id) {
                 $cli = Client::find($this->client_id);
                 $cli->cli_situation += $this->total_vente_apres_remise;
                 $cli->save();
             }
 
-            // Reset panier
             $this->panier = [];
             $this->total_vente = 0;
             $this->compteur_remise = 0;
+            $this->recherche_client = ''; // On réinitialise le champ de recherche
             
             session()->flash('success', __('Vente enregistrée avec succès !'));
             
-            // On redirige vers la liste des ventes resto
-            return redirect()->route('caisse.ventes_resto');
+            if ($origine === 'resto' || $origine === 'mixte') {
+                return redirect()->route('caisse.ventes_resto');
+            } else {
+                return redirect()->route('factures.index'); 
+            }
 
         } catch (Exception $e) {
             session()->flash('danger', __('Un problème est rencontré lors de la vente.'));
-            // Optionnel : \Log::error($e->getMessage());
         }
-    }
-
-    // Quand on tape dans le champ "Taux de remise %"
-    public function updatedRemise()
-    {
-        $this->calculerRemise();
-    }
-
-    // Quand on tape dans le champ "Montant de la remise"
-    public function updatedRemise2()
-    {
-        $this->calculerRemise();
     }
 
     public function render()
     {
-        $categories = \App\Models\Categorie::with(['articles' => function($query) {
-            $query->where('gerer_stock', false)->orWhere(function($q) {
-                $q->where('gerer_stock', true)->where('ar_qte', '>', 0);
-            });
-        }])->get();
+        if ($this->type_vente === 'resto') {
+            $query = Article::where('gerer_stock', false);
+        } else {
+            $query = Article::where('gerer_stock', true)->where('ar_qte', '>', 0);
+        }
+
+        if (!empty($this->code_barre)) {
+            $articles = $query->where(function($q) {
+                $q->where('ar_codebarre', 'like', '%' . $this->code_barre . '%')
+                  ->orWhere('ar_reference', 'like', '%' . $this->code_barre . '%')
+                  ->orWhere('id', 'like', '%' . $this->code_barre . '%');
+            })->get();
+
+            $categories = collect();
+            if ($articles->count() > 0) {
+                $catRecherche = new \App\Models\Categorie(['nom' => __('Résultat de recherche')]);
+                $catRecherche->setRelation('articles', $articles);
+                $categories->push($catRecherche);
+            }
+        } else {
+            if ($this->type_vente === 'resto') {
+                $categories = \App\Models\Categorie::with(['articles' => function($q) {
+                    $q->where('gerer_stock', false);
+                }])->get();
+            } else {
+                $articles = Article::where('gerer_stock', true)->where('ar_qte', '>', 0)->get();
+                $categories = collect();
+                
+                $sansCategorie = $articles->whereNull('categorie_id');
+                if ($sansCategorie->count() > 0) {
+                    $catSans = new \App\Models\Categorie(['nom' => 'Sans catégorie']);
+                    $catSans->setRelation('articles', $sansCategorie);
+                    $categories->push($catSans);
+                }
+
+                $avecCategorie = $articles->whereNotNull('categorie_id')->groupBy('categorie_id');
+                foreach ($avecCategorie as $catId => $arts) {
+                    $cat = \App\Models\Categorie::find($catId);
+                    if ($cat) {
+                        $cat->setRelation('articles', $arts);
+                        $categories->push($cat);
+                    }
+                }
+            }
+            $categories = $categories->filter(fn($c) => $c->articles->count() > 0);
+        }
 
         $methodesList = Methode::where('meth_active', '1')->get();
         $clientsList = Client::all();
-
         $this->type_paiement = Methode::find($this->paiement_id);
 
         return view('livewire.point-of-sale', compact('categories', 'methodesList', 'clientsList'));

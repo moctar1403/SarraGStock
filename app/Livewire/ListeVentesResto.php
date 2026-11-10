@@ -190,7 +190,8 @@ class ListeVentesResto extends Component
             ->leftJoin('methodes', 'factures.fa_type_p', '=', 'methodes.id')
             ->leftJoin('users', 'users.id', '=', DB::raw('(SELECT ve_saisi_par FROM ventes WHERE ventes.facture_id = factures.id LIMIT 1)'))
             ->select('factures.*', 'methodes.meth_nom', 'users.name as caissier')
-            ->where('factures.fa_origine', 'resto') // <-- NOUVEAU FILTRE
+            // ->where('factures.fa_origine', 'resto') // <-- NOUVEAU FILTRE
+            ->whereIn('factures.fa_origine', ['resto', 'mixte'])
             
             ->when($this->search, function ($q) {
                 $q->where(function($sub) {

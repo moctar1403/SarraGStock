@@ -1,6 +1,7 @@
 <?php
 namespace App\Livewire;
 
+use App\Models\Charge;
 use App\Models\Facture;
 use App\Models\Methode;
 use App\Models\Payement;
@@ -30,10 +31,28 @@ class Homs3 extends Component
     public $p_achat_t=0;
     public $liste_apps;
     public $liste_pay=[];
+    public $ventes_mixtes = 0; // NOUVEAU
+    public $charges_totales = 0;
  
     public function mount(){
         $this->date1=now()->format('Y-m-d');
         $this->date2=now()->format('Y-m-d');
+        $this->ch_date = now()->format('Y-m-d'); // <-- C'est parfait
+    }
+    // NOUVEAU : Sécurité pour s'assurer que date1 <= date2
+    public function updatedDate1($value)
+    {
+        if ($value > $this->date2) {
+            $this->date2 = $value;
+        }
+    }
+
+    // NOUVEAU : Sécurité pour s'assurer que date2 >= date1
+    public function updatedDate2($value)
+    {
+        if ($value < $this->date1) {
+            $this->date1 = $value;
+        }
     }
 
     public function render()
@@ -97,7 +116,7 @@ class Homs3 extends Component
                                     ->whereDate('updated_at','<=', $this->date2)
                                     ->sum('re_montant_remise');
 
-        $this->profit= $this->ventes_sum - $this->p_achat_t - $this->pertes;  
+        // $this->profit= $this->ventes_sum - $this->p_achat_t - $this->pertes;  
 
         // 6. Répartition par méthode de paiement
         $this->liste_apps=Methode::where('meth_active','=','1')->get();
@@ -107,7 +126,17 @@ class Homs3 extends Component
                                     ->whereDate('updated_at','<=', $this->date2)
                                     ->sum('fa_tot_apres_remise');                       
         }
+        $this->ventes_mixtes = Facture::where('fa_origine', 'mixte')
+                                ->whereDate('updated_at','>=', $this->date1)
+                                ->whereDate('updated_at','<=', $this->date2)
+                                ->sum('fa_tot_apres_remise');
+                // 6. Charges
+        $this->charges_totales = Charge::whereDate('ch_date','>=', $this->date1)
+                                    ->whereDate('ch_date','<=', $this->date2)
+                                    ->sum('ch_montant');
 
+        // 7. Profit (On déduit les charges)
+        $this->profit = $this->ventes_sum - $this->p_achat_t - $this->pertes - $this->charges_totales;
          return view('livewire.homs3');
     }
 }

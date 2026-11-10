@@ -76,6 +76,8 @@ class PermissionsSeeder extends Seeder
             'liste facture', 'menu ventes',
             'delete methodes', 'view stats_ventes', 'view stats_articles',
             'delete ltransfert', 'See Hello world', 'See Good Bye',
+            // Charges
+            'view charges', 'create charge', 'delete charge',
         ];
 
         $now = now();

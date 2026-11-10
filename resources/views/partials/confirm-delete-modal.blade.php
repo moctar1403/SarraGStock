@@ -22,7 +22,8 @@
 
             <button
                 type="button"
-                wire:click.prevent="delete"
+                wire:click="delete"
+                @click="open = false"
                 class="px-4 py-2 bg-red-600 text-white rounded">
                 {{ __('Supprimer') }}
             </button>

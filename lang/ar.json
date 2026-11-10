@@ -827,5 +827,12 @@
     "Remboursement supprimé": "تم حذف الاسترداد",
     "Catégories d'articles": "فئات المواد",
     "Veuillez sélectionner une méthode de paiement.": "الرجاء تحديد طريقة الدفع.",
-    "Veuillez sélectionner une méthode de paiement": "الرجاء تحديد طريقة الدفع"
+    "Veuillez sélectionner une méthode de paiement": "الرجاء تحديد طريقة الدفع",
+    "Ventes Mixtes": "مبيعات مختلطة",
+    "Mixte (Espèces / Apps)": "مختلط (نقداً / تطبيقات)",
+    "Mixte (Crédit)": "مختلط (آجل)",
+    "Mixte": "مختلط",
+    "Scanner ou taper un code-barres / référence...": "امسح أو اكتب الباركود / المرجع...",
+    "Résultat de recherche": "نتيجة البحث",
+    "Sans catégorie": "بدون فئة"
 }

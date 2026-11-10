@@ -26,15 +26,26 @@
                     <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()?->monn_code ?? '') }}</span>
                 </div>
 
-                {{-- Distinction Resto / Classique --}}
-                <div class="grid grid-cols-2 gap-4 py-2">
-                    <div class="bg-gray-50 p-3 rounded text-center">
+                {{-- Total Charges (NOUVEAU : ajouté en haut pour visibilité) --}}
+                <div class="text-sm font-medium text-gray-900 px-3 py-2 hover:bg-gray-50 rounded transition border-b pb-2 mt-2">
+                    <span class="font-bold text-lg">{{ __('Total Charges') }} :</span>
+                    <span class="mx-2 text-red-600 font-bold text-lg number-cell">{!! format_number($charges_totales) !!}</span>
+                    <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()?->monn_code ?? '') }}</span>
+                </div>
+
+                {{-- Distinction Resto / Classique / Mixte --}}
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 py-2">
+                    <div class="bg-blue-50 p-3 rounded text-center border border-blue-100">
                         <span class="block text-xs text-gray-500 uppercase">{{ __('Ventes Classiques') }}</span>
                         <span class="text-lg font-bold text-blue-600">{!! format_number($ventes_classiques) !!}</span>
                     </div>
-                    <div class="bg-orange-50 p-3 rounded text-center">
+                    <div class="bg-orange-50 p-3 rounded text-center border border-orange-100">
                         <span class="block text-xs text-gray-500 uppercase">{{ __('Ventes Restaurant') }}</span>
                         <span class="text-lg font-bold text-orange-600">{!! format_number($ventes_resto) !!}</span>
+                    </div>
+                    <div class="bg-purple-50 p-3 rounded text-center border border-purple-100">
+                        <span class="block text-xs text-gray-500 uppercase">{{ __('Ventes Mixtes') }}</span>
+                        <span class="text-lg font-bold text-purple-600">{!! format_number($ventes_mixtes ?? 0) !!}</span>
                     </div>
                 </div>
 
@@ -76,6 +87,13 @@
                 <div class="text-sm font-medium text-gray-900 px-3 py-2 hover:bg-gray-50 rounded transition">
                     <span class="font-semibold">{{ __('Coût de revient des ventes') }} :</span>
                     <span class="mx-2 text-orange-600 number-cell">-{!! format_number($p_achat_t) !!}</span>
+                </div>
+                
+                {{-- Charges (AJOUTÉ ICI pour le détail du calcul) --}}
+                <div class="text-sm font-medium text-gray-900 px-3 py-2 hover:bg-gray-50 rounded transition">
+                    <span class="font-semibold">{{ __('Charges') }} :</span>
+                    <span class="mx-2 text-red-600 number-cell">-{!! format_number($charges_totales) !!}</span>
+                    <span>{{ __(App\Models\Monnaie::where('monn_active','=','1')->first()?->monn_code ?? '') }}</span>
                 </div>
 
                 {{-- Profit --}}

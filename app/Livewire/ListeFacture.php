@@ -109,7 +109,8 @@ class ListeFacture extends Component
             $factures=Facture::leftJoin('clients','factures.fa_client','=','clients.id')
                                 ->leftJoin('methodes','factures.fa_type_p','=','methodes.id')
                                 ->select('factures.*','clients.cli_nom','clients.cli_tel','methodes.meth_nom')
-                                ->where('factures.fa_origine', 'classique') // <-- NOUVEAU
+                                // ->where('factures.fa_origine', 'classique') // 
+                                ->whereIn('factures.fa_origine', ['classique', 'mixte'])
                                 ->where(function($query) {
                                     $query->where('clients.cli_nom', 'like', '%' . $this->search . '%')
                                           ->orWhere('clients.cli_tel', 'like', '%' . $this->search . '%')

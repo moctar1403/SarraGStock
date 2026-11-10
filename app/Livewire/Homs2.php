@@ -6,7 +6,6 @@ use Livewire\Component;
 use App\Models\Vente;
 use Livewire\WithPagination;
 
-
 class Homs2 extends Component
 {
     public $espece=0;
@@ -17,6 +16,7 @@ class Homs2 extends Component
     public $ventes_sum;
     public $ventes_liste;
     public $ventes_msg;
+
     public function total_ventes(){
         $this->ventes_msg="Total des ventes";
         $this->ventes_liste = Vente::leftJoin('clients','ventes.ve_client','=','clients.id')
@@ -102,19 +102,22 @@ class Homs2 extends Component
                             ->select('ventes.ve_quantite','ventes.ve_prix_vente','ventes.ve_prix_tot','ventes.updated_at','clients.cli_nom','articles.ar_lib')
                             ->orderByDesc('ventes.updated_at')
                             ->paginate(10);                   
-        //liste des articles les plus vendus
+                            
+        //liste des articles les plus vendus (CORRIGÉ)
         $plus_vendu = Vente::leftJoin('articles','ventes.article_id','=','articles.id')
                             ->selectRaw('SUM(ventes.ve_quantite) as sum_qte,articles.ar_lib,AVG(ventes.ve_prix_vente) as avg_prix')
-                            ->groupBy('article_id')
+                            ->groupBy('ventes.article_id', 'articles.ar_lib') // <-- CORRECTION ICI
                             ->orderByDesc('sum_qte')
                             ->paginate(10);  
+                            
         //somme des ventes par jour
         $ventes_sum_day = Vente::where('updated_at', 'like',$now.'%')
                             ->sum('ve_prix_tot');
         if($ventes_sum_day==0){
             $ventes_sum_day=0;
-            }
-            $p_achat_d = Vente::where('updated_at', 'like',$now.'%')
+        }
+        
+        $p_achat_d = Vente::where('updated_at', 'like',$now.'%')
                             ->select('ventes.ve_quantite','ventes.ve_prix_achat')
                             ->get();
         $p_achat_t=0;
@@ -126,6 +129,7 @@ class Homs2 extends Component
             }
          }
          $profit_d= $ventes_sum_day-$p_achat_t;                       
+         
         //somme des ventes 
         $this->ventes_sum = Vente::sum('ve_prix_tot');
          if($this->ventes_sum==0){

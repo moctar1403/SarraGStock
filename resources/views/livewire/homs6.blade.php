@@ -55,6 +55,20 @@
                             </td>
                         </tr>
 
+                        {{-- NOUVELLES LIGNES POUR LE MIXTE --}}
+                        <tr class="border-b hover:bg-purple-50 bg-purple-50/50">
+                            <td class="text-sm font-medium text-gray-700 px-4 py-2">{{ __('Mixte (Espèces / Apps)') }}</td>
+                            <td class="text-sm font-medium text-green-600 px-4 py-2 {{ app()->getLocale() == 'ar' ? 'text-left' : 'text-right' }}">
+                                <span class="number-cell">{!! format_number($ventes_mixte_esp) !!}</span>
+                            </td>
+                        </tr>
+                        <tr class="border-b hover:bg-purple-50 bg-purple-50/50">
+                            <td class="text-sm font-medium text-gray-700 px-4 py-2">{{ __('Mixte (Crédit)') }}</td>
+                            <td class="text-sm font-medium text-orange-600 px-4 py-2 {{ app()->getLocale() == 'ar' ? 'text-left' : 'text-right' }}">
+                                <span class="number-cell">{!! format_number($ventes_mixte_cre) !!}</span>
+                            </td>
+                        </tr>
+
                         <tr class="border-b hover:bg-gray-50">
                             <td class="text-sm font-medium text-gray-700 px-4 py-2">{{ __('Valeur de stock restant') }}</td>
                             <td class="text-sm font-medium text-blue-600 px-4 py-2 {{ app()->getLocale() == 'ar' ? 'text-left' : 'text-right' }}">

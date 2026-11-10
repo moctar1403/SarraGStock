@@ -27,6 +27,11 @@
                     {{ __('Inventaire de stock') }}
                 </x-nav-link-dashboard>
             @endcan
+            @can('view charges')
+                <x-nav-link-dashboard :route="route('charges.index')" :active="request()->routeIs('charges.index')">
+                    {{ __('Charges') }}
+                </x-nav-link-dashboard>
+            @endcan
 
         </div>
 

@@ -28,6 +28,9 @@ Pour faciliter la navigation, ce guide est découpé par modules. Cliquez sur un
 - [Paiements Fournisseurs](/documentation/tresorerie-fournisseurs)
 - [Remboursements et Encaissements](/documentation/remboursements)
 
+### 📉 Gestion des Charges (Dépenses)
+- [Gestion des Charges](/documentation/charges)
+
 ### ⚙️ Configuration
 - [Méthodes de Paiement](/documentation/methodes-paiement)
 

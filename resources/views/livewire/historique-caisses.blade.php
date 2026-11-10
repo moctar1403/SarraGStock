@@ -14,8 +14,6 @@
         </script>
     @endif
 
-    <!-- Le reste de ton code ... -->
-    <!-- Le reste de mon code -->
     {{-- Si le caissier a une caisse ouverte, on affiche l'action en cours --}}
     @if($maCaisseOuverte)
         <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-700 p-4 mb-6 rounded-md shadow-sm flex justify-between items-center">
@@ -111,14 +109,22 @@
                                                 @endif
                                             </td>
                                             <td class="text-sm font-medium text-center whitespace-nowrap">
-                                                <a href="{{ route('caisse.details', $caisse->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs">
-                                                    {{ __('Voir les ventes') }}
-                                                </a>
+                                                <div class="flex justify-center space-x-1 rtl:space-x-reverse">
+                                                    {{-- NOUVEAU : Bouton Ticket (Rapport de caisse) --}}
+                                                    <a href="{{ route('caisses.ticket', $caisse->id) }}" target="_blank" class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded text-xs inline-flex items-center" title="{{ __('Imprimer le rapport de caisse') }}">
+                                                        Ticket
+                                                    </a>
+
+                                                    {{-- Bouton Voir les ventes (existant) --}}
+                                                    <a href="{{ route('caisse.details', $caisse->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs">
+                                                        {{ __('Voir les ventes') }}
+                                                    </a>
+                                                </div>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="8" class="text-center py-4 text-gray-500">
+                                            <td colspan="9" class="text-center py-4 text-gray-500">
                                                 {{ __('Aucune caisse trouvée.') }}
                                             </td>
                                         </tr>

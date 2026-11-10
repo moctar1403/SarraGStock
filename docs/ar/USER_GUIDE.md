@@ -28,6 +28,9 @@
 - [مدفوعات الموردين](/documentation/tresorerie-fournisseurs)
 - [المبالغ المستردة والتحصيلات](/documentation/remboursements)
 
+### 📉 إدارة المصاريف (النفقات)
+- [إدارة المصاريف](/documentation/charges)
+
 ### ⚙️ التكوين
 - [طرق الدفع](/documentation/methodes-paiement)
 

@@ -2,6 +2,7 @@
 use App\Helpers\MachineHelper;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BackupController;
+use App\Http\Controllers\ChargesController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\DarticleController;
@@ -26,10 +27,12 @@ use App\Http\Controllers\UniteController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VenteController;
 use App\Livewire\ClotureCaisse;
+use App\Livewire\CreateCharge;
 use App\Livewire\CreateEncaissementFournisseur;
 use App\Livewire\CreateRemboursement;
 use App\Livewire\DetailsCaisse;
 use App\Livewire\HistoriqueCaisses;
+use App\Livewire\ListeCharges;
 use App\Livewire\ListeEncaissement;
 use App\Livewire\ListeVentesResto;
 use App\Livewire\OuvrirCaisse;
@@ -287,6 +290,7 @@ Route::middleware([
             'resto-pos' => $folder . 'modules/resto-pos.md',
             'remboursements' => $folder . 'modules/remboursements.md',
             'journal-mouvements' => $folder . 'modules/journal-mouvements.md',
+            'charges' => $folder . 'modules/charges.md',
             // 'journal-mouvements' => base_path('docs/modules/journal-mouvements.md'),
         ];
 
@@ -334,4 +338,7 @@ Route::middleware([
     Route::get('/fournisseurs/{id}/details', \App\Livewire\DetailsFournisseur::class)->name('fournisseurs.details');
     Route::get('/historique-mouvements', \App\Livewire\HistoriqueMouvements::class)->name('historique.mouvements');
     Route::get('/categories', \App\Livewire\ListeCategorie::class)->name('configs.categories');
+    Route::get('/charges/create', CreateCharge::class)->name('charges.create');
+    Route::get('/charges', [ChargesController::class, 'index'])->name('charges.index');
+    Route::get('/ticket-caisse/{caisse}', [\App\Http\Controllers\FactureController::class, 'printTicketCaisse'])->name('caisses.ticket');
 });
