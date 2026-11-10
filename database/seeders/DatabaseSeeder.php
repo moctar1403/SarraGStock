@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+use Database\Seeders\MethodevsSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -44,6 +45,7 @@ class DatabaseSeeder extends Seeder
         
         // Table methodes (référentiel)
         DB::table('methodes')->truncate();
+        DB::table('methodevs')->truncate();
         DB::table('unites')->truncate();
         DB::table('sunites')->truncate();
         
@@ -70,6 +72,7 @@ class DatabaseSeeder extends Seeder
             ModelHasRolesSeeder::class,
             RoleHasPermissionsSeeder::class,  
             MethodesSeeder::class,
+            MethodevsSeeder::class,
             MonnaiesSeeder::class,
             UnitesSeeder::class,
             SunitesSeeder::class,

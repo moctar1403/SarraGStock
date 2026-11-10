@@ -341,4 +341,67 @@ Route::middleware([
     Route::get('/charges/create', CreateCharge::class)->name('charges.create');
     Route::get('/charges', [ChargesController::class, 'index'])->name('charges.index');
     Route::get('/ticket-caisse/{caisse}', [\App\Http\Controllers\FactureController::class, 'printTicketCaisse'])->name('caisses.ticket');
+    Route::get('/fix-methodevs', function() {
+    $methodes = [
+        [
+            'mvs_sym' => 'CUMP',
+            'mvs_lib' => 'Coût Unitaire Moyen Pondéré',
+            'mvs_active' => 1, // Active par défaut
+            'created_at' => now(),
+            'updated_at' => now()
+        ],
+        [
+            'mvs_sym' => 'PEPS',
+            'mvs_lib' => 'Premier Entré, Premier Sorti',
+            'mvs_active' => 0,
+            'created_at' => now(),
+            'updated_at' => now()
+        ],
+        [
+            'mvs_sym' => 'DEPS',
+            'mvs_lib' => 'Dernier Entré, Premier Sorti',
+            'mvs_active' => 0,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]
+    ];
+
+    // On vérifie d'abord si elles existent déjà pour éviter les doublons (erreur SQL)
+    foreach ($methodes as $methode) {
+        $exists = \Illuminate\Support\Facades\DB::table('methodevs')
+                    ->where('mvs_sym', $methode['mvs_sym'])
+                    ->exists();
+                    
+        if (!$exists) {
+            \Illuminate\Support\Facades\DB::table('methodevs')->insert($methode);
+        }
+    }
+
+    return 'Toutes les méthodes (CUMP, PEPS, DEPS) ont été insérées avec succès !';
+    });
+    Route::get('/fix-stock-articles', function() {
+    $articles = \App\Models\Article::all();
+    $count = 0;
+
+    foreach ($articles as $article) {
+        $total_entrees = \App\Models\Entrstock::where('article_id', $article->id)->sum('ent_qte');
+        $total_sorties = \App\Models\Sortstock::where('article_id', $article->id)->sum('sor_qte');
+        $nouvelle_qte = $total_entrees - $total_sorties;
+
+        if ($article->ar_qte != $nouvelle_qte) {
+            $article->ar_qte = $nouvelle_qte;
+            
+            // Optionnel : Recalcul du prix d'achat moyen (CUMP)
+            $total_valeur_entrees = \App\Models\Entrstock::where('article_id', $article->id)->sum(\DB::raw('ent_qte * ent_prix_achat'));
+            if ($nouvelle_qte > 0) {
+                $article->ar_prix_achat = $total_valeur_entrees / $total_entrees; // Moyenne des entrées
+            }
+            
+            $article->save();
+            $count++;
+        }
+    }
+
+    return "Mise à jour terminée ! $count articles ont été corrigés.";
+    });
 });

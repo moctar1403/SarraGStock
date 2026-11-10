@@ -98,6 +98,10 @@ if (! function_exists('Actualiser_PAA')) {
         $sum_total_entr=0;
         $sum_total_sort=0;
         $mvsck=Methodevs::where('mvs_active','1')->first();
+        // SÉCURITÉ : Si la méthode n'existe pas, on arrête la fonction
+        if (!$mvsck) {
+            return; 
+        }
         $article=Article::where('ar_qte','>','0')
                         ->where('id',$art_id)
                         ->first();
@@ -165,6 +169,10 @@ if (! function_exists('Actualiser_PAA2')) {
         $sum1=0;
         $sum2=0;
         $mvsck=Methodevs::where('mvs_active','1')->first();
+        // SÉCURITÉ : Si la méthode n'existe pas, on arrête la fonction
+        if (!$mvsck) {
+            return; 
+        }
         $article=Article::where('id',$art_id)
                         ->first();
         if ($mvsck->mvs_sym=="CUMP") {
@@ -217,6 +225,10 @@ if (! function_exists('annuler_entree')) {
     {
         //cette fonction va annuler l'entree en stock
         $mvsck=Methodevs::where('mvs_active','1')->first();
+        // SÉCURITÉ : Si la méthode n'existe pas, on arrête la fonction
+        if (!$mvsck) {
+            return; 
+        }
         $article=Article::where('id',$art_id)
                         ->first();
         $ancien_ar_qte=$article->ar_qte;
